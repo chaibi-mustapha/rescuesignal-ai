@@ -1,0 +1,400 @@
+/**
+ * RescueSignal AI - Victim Transmitter Controller
+ */
+
+class VictimTransmitter {
+  constructor(containerId = "victim-screen") {
+    this.container = document.getElementById(containerId);
+    this.mediaRecorder = null;
+    this.audioChunks = [];
+    this.isRecording = false;
+    this.currentPacket = null;
+    this.currentMorse = "";
+    this.init();
+  }
+
+  init() {
+    this.setupEventListeners();
+    this.initBatteryIndicator();
+    // Default initial demonstration packet
+    this.loadScenarioText("Nous sommes trois personnes coincées sous les décombres. Une personne est blessée à la jambe et une autre est inconsciente. Besoin d'aide médicale urgente.");
+  }
+
+  initBatteryIndicator() {
+    const el = document.getElementById("tx-battery-indicator");
+    if (!el) return;
+
+    if (navigator.getBattery) {
+      navigator.getBattery().then(battery => {
+        const update = () => {
+          const pct = Math.round(battery.level * 100);
+          const hours = Math.round((pct / 100) * 24);
+          el.innerText = `🔋 ${pct}% • ${hours}h survie`;
+        };
+        update();
+        battery.addEventListener("levelchange", update);
+      }).catch(() => {});
+    }
+  }
+
+  setupEventListeners() {
+    // Mode tabs switching
+    const tabVoice = document.getElementById("tab-btn-voice");
+    const tabSilent = document.getElementById("tab-btn-silent");
+    const voiceWrapper = document.getElementById("voice-control-wrapper");
+    const silentArea = document.getElementById("silent-control-area");
+
+    if (tabVoice && tabSilent) {
+      tabVoice.addEventListener("click", () => {
+        tabVoice.classList.add("active");
+        tabVoice.classList.remove("silent-active");
+        tabSilent.classList.remove("active", "silent-active");
+        if (voiceWrapper) voiceWrapper.style.display = "block";
+        if (silentArea) silentArea.classList.remove("active");
+      });
+
+      tabSilent.addEventListener("click", () => {
+        tabSilent.classList.add("active", "silent-active");
+        tabVoice.classList.remove("active");
+        if (voiceWrapper) voiceWrapper.style.display = "none";
+        if (silentArea) silentArea.classList.add("active");
+      });
+    }
+
+    // Steppers logic
+    this.setupSilentSteppers();
+
+    // Situation picker logic
+    document.querySelectorAll("#silent-situation-picker .situation-chip").forEach(chip => {
+      chip.addEventListener("click", (e) => {
+        document.querySelectorAll("#silent-situation-picker .situation-chip").forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+      });
+    });
+
+    // Urgency picker logic
+    document.querySelectorAll("#silent-urgency-picker .urgency-pill").forEach(pill => {
+      pill.addEventListener("click", (e) => {
+        document.querySelectorAll("#silent-urgency-picker .urgency-pill").forEach(p => p.classList.remove("active"));
+        pill.classList.add("active");
+      });
+    });
+
+    // Silent SOS Trigger
+    const btnSilentSos = document.getElementById("btn-trigger-silent-sos");
+    if (btnSilentSos) {
+      btnSilentSos.addEventListener("click", () => this.sendSilentEmergency());
+    }
+
+    // Microphone button
+    const micBtn = document.getElementById("btn-mic-record");
+    if (micBtn) {
+      micBtn.addEventListener("click", () => this.toggleRecording());
+    }
+
+    // Preset chips
+    document.querySelectorAll(".scenario-chip").forEach(chip => {
+      chip.addEventListener("click", (e) => {
+        const text = e.target.getAttribute("data-prompt");
+        if (text) this.loadScenarioText(text);
+      });
+    });
+
+    // Transmission action buttons
+    const btnAcoustic = document.getElementById("btn-tx-acoustic");
+    if (btnAcoustic) {
+      btnAcoustic.addEventListener("click", () => this.transmitAcoustic());
+    }
+
+    const btnOptical = document.getElementById("btn-tx-optical");
+    if (btnOptical) {
+      btnOptical.addEventListener("click", () => this.transmitOptical());
+    }
+
+    const btnMesh = document.getElementById("btn-tx-mesh");
+    if (btnMesh) {
+      btnMesh.addEventListener("click", () => this.transmitMeshDirect());
+    }
+  }
+
+  setupSilentSteppers() {
+    const bindStepper = (decId, incId, valId, minVal = 0) => {
+      const btnDec = document.getElementById(decId);
+      const btnInc = document.getElementById(incId);
+      const elVal = document.getElementById(valId);
+      if (!btnDec || !btnInc || !elVal) return;
+
+      btnDec.addEventListener("click", () => {
+        let cur = parseInt(elVal.innerText) || minVal;
+        if (cur > minVal) {
+          elVal.innerText = cur - 1;
+        }
+      });
+
+      btnInc.addEventListener("click", () => {
+        let cur = parseInt(elVal.innerText) || minVal;
+        elVal.innerText = cur + 1;
+      });
+    };
+
+    bindStepper("btn-dec-people", "btn-inc-people", "val-silent-people", 1);
+    bindStepper("btn-dec-injured", "btn-inc-injured", "val-silent-injured", 0);
+    bindStepper("btn-dec-unconscious", "btn-inc-unconscious", "val-silent-unconscious", 0);
+  }
+
+  async sendSilentEmergency() {
+    const btn = document.getElementById("btn-trigger-silent-sos");
+    const origText = btn ? btn.innerHTML : "";
+    if (btn) btn.innerHTML = `<span>⏳ Envoi silencieux en cours...</span>`;
+
+    // Extract values
+    const activeSitChip = document.querySelector("#silent-situation-picker .situation-chip.active");
+    const situationType = activeSitChip ? activeSitChip.getAttribute("data-sit") : "BUILDING_COLLAPSE";
+
+    const peopleCount = parseInt(document.getElementById("val-silent-people")?.innerText || "1", 10);
+    const injuredCount = parseInt(document.getElementById("val-silent-injured")?.innerText || "0", 10);
+    const unconsciousCount = parseInt(document.getElementById("val-silent-unconscious")?.innerText || "0", 10);
+
+    const activeUrgPill = document.querySelector("#silent-urgency-picker .urgency-pill.active");
+    const medicalUrgency = activeUrgPill ? activeUrgPill.getAttribute("data-urg") : "URGENT";
+
+    const payload = {
+      situation_type: situationType,
+      people_count: peopleCount,
+      injured_count: injuredCount,
+      unconscious_count: unconsciousCount,
+      medical_urgency: medicalUrgency,
+      hazards: [],
+      location_details: "Zone Décombres (Alerte Silencieuse)"
+    };
+
+    try {
+      const response = await fetch("/api/packet/manual", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+      if (data.success && data.packet) {
+        this.applyPacket(data.packet, data.morse_sequence);
+
+        if (btn) {
+          btn.innerHTML = `<span>✅ SOS SILENCIEUX ENVOYÉ !</span>`;
+          btn.style.background = "linear-gradient(135deg, #10b981, #047857)";
+          setTimeout(() => {
+            btn.innerHTML = origText;
+            btn.style.background = "";
+          }, 2000);
+        }
+      }
+    } catch (err) {
+      console.error("Silent emergency failed:", err);
+      if (btn) {
+        btn.innerHTML = `<span>❌ Erreur transmission</span>`;
+        setTimeout(() => { btn.innerHTML = origText; }, 1500);
+      }
+    }
+  }
+
+  async toggleRecording() {
+    const micBtn = document.getElementById("btn-mic-record");
+    const micLabel = document.getElementById("mic-status-label");
+
+    if (this.isRecording) {
+      // Stop recording
+      if (this.mediaRecorder && this.mediaRecorder.state !== "inactive") {
+        this.mediaRecorder.stop();
+      }
+      this.isRecording = false;
+      micBtn.classList.remove("recording");
+      if (micLabel) micLabel.innerText = "Traitement IA en cours...";
+    } else {
+      // Start recording
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        this.audioChunks = [];
+        this.mediaRecorder = new MediaRecorder(stream);
+
+        this.mediaRecorder.ondataavailable = (event) => {
+          if (event.data.size > 0) this.audioChunks.push(event.data);
+        };
+
+        this.mediaRecorder.onstop = async () => {
+          const audioBlob = new Blob(this.audioChunks, { type: "audio/webm" });
+          stream.getTracks().forEach(track => track.stop());
+          await this.uploadAudioBlob(audioBlob);
+        };
+
+        this.mediaRecorder.start();
+        this.isRecording = true;
+        micBtn.classList.add("recording");
+        if (micLabel) micLabel.innerText = "Écoute en cours... Parlez !";
+      } catch (err) {
+        console.warn("Microphone access denied or not available, using voice prompt simulation:", err);
+        this.loadScenarioText("SOS secours trois personnes bloquées dont un blessé grave");
+        if (micLabel) micLabel.innerText = "Mode Simulation Vocale Activé";
+      }
+    }
+  }
+
+  async uploadAudioBlob(blob) {
+    const micLabel = document.getElementById("mic-status-label");
+    try {
+      const formData = new FormData();
+      formData.append("file", blob, "emergency_voice.webm");
+
+      const response = await fetch("/api/voice/process-audio", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+      if (data.success && data.packet) {
+        this.applyPacket(data.packet, data.morse_sequence);
+      }
+    } catch (e) {
+      console.error("Audio processing failed:", e);
+      if (micLabel) micLabel.innerText = "Erreur - Repli sur moteur local";
+    }
+  }
+
+  async loadScenarioText(promptText) {
+    const micLabel = document.getElementById("mic-status-label");
+    if (micLabel) micLabel.innerText = "Analyse AssemblyAI en cours...";
+
+    try {
+      const response = await fetch("/api/voice/process-text", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: promptText, language: "fr" })
+      });
+
+      const data = await response.json();
+      if (data.success && data.packet) {
+        this.applyPacket(data.packet, data.morse_sequence);
+      }
+    } catch (e) {
+      console.error("Text analysis failed:", e);
+    }
+  }
+
+  applyPacket(packet, morse) {
+    this.currentPacket = packet;
+    this.currentMorse = morse;
+
+    const micLabel = document.getElementById("mic-status-label");
+    if (micLabel) micLabel.innerText = "Prêt à transmettre";
+
+    // Update UI elements
+    const rawBox = document.getElementById("tx-packet-raw");
+    if (rawBox) rawBox.innerText = packet.compact_string;
+
+    const sizeEl = document.getElementById("tx-packet-size");
+    if (sizeEl) sizeEl.innerText = `${packet.byte_size} octets`;
+
+    const chkEl = document.getElementById("tx-packet-chk");
+    if (chkEl) chkEl.innerText = `CRC #${packet.checksum}`;
+
+    // Fill Extraction Details
+    const p = packet.payload;
+    const typeEl = document.getElementById("tx-info-type");
+    if (typeEl) typeEl.innerText = p.situation_type.replace("_", " ");
+
+    const pCountEl = document.getElementById("tx-info-people");
+    if (pCountEl) pCountEl.innerText = p.people_count;
+
+    const iCountEl = document.getElementById("tx-info-injured");
+    if (iCountEl) iCountEl.innerText = p.injured_count;
+
+    const uCountEl = document.getElementById("tx-info-unconscious");
+    if (uCountEl) uCountEl.innerText = p.unconscious_count;
+
+    const urgEl = document.getElementById("tx-info-urgency");
+    if (urgEl) {
+      urgEl.innerText = p.medical_urgency;
+      urgEl.className = `badge ${p.medical_urgency === 'CRITICAL' ? 'badge-pulse' : ''}`;
+    }
+
+    const locEl = document.getElementById("tx-info-location");
+    if (locEl) locEl.innerText = p.location_details || "Zone Détectée";
+  }
+
+  async transmitAcoustic() {
+    if (!this.currentPacket) return;
+    const btn = document.getElementById("btn-tx-acoustic");
+    const origHtml = btn.innerHTML;
+    btn.innerHTML = `<span>🔊 Émission en cours...</span>`;
+    btn.disabled = true;
+
+    // Play FSK acoustic burst using Sound Engine
+    await window.soundEngine.playAcousticFSK(this.currentPacket.compact_string, (cur, total) => {
+      const pct = Math.round((cur / total) * 100);
+      btn.innerText = `🔊 Signal Sonore: ${pct}%`;
+    });
+
+    btn.innerHTML = origHtml;
+    btn.disabled = false;
+  }
+
+  async transmitOptical() {
+    if (!this.currentMorse) return;
+    const btn = document.getElementById("btn-tx-optical");
+    const overlay = document.getElementById("optical-strobe-overlay");
+    if (!overlay) return;
+
+    btn.disabled = true;
+    overlay.style.display = "block";
+
+    // Optical Morse pulse timing
+    const tokens = this.currentMorse.split(" ");
+    for (const token of tokens.slice(0, 15)) { // flash first sequence of words
+      for (const char of token) {
+        if (char === '.') {
+          overlay.style.background = "#ffffff";
+          await window.soundEngine.sleep(80);
+          overlay.style.background = "transparent";
+          await window.soundEngine.sleep(80);
+        } else if (char === '-') {
+          overlay.style.background = "#ffffff";
+          await window.soundEngine.sleep(240);
+          overlay.style.background = "transparent";
+          await window.soundEngine.sleep(80);
+        }
+      }
+      await window.soundEngine.sleep(200);
+    }
+
+    overlay.style.display = "none";
+    btn.disabled = false;
+  }
+
+  async transmitMeshDirect() {
+    if (!this.currentPacket) return;
+    const btn = document.getElementById("btn-tx-mesh");
+    const origHtml = btn.innerHTML;
+    btn.innerHTML = `<span>📶 Diffusion Mesh envoyée !</span>`;
+
+    try {
+      await fetch("/api/packet/broadcast", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sender_id: "Victim-Device-A",
+          packet: this.currentPacket,
+          channel: "p2p_mesh",
+          device_name: "SmartPhone-Victim"
+        })
+      });
+    } catch (e) {
+      console.warn("Broadcast err:", e);
+    }
+
+    setTimeout(() => {
+      btn.innerHTML = origHtml;
+    }, 1500);
+  }
+}
+
+// Attach to window
+window.VictimTransmitter = VictimTransmitter;

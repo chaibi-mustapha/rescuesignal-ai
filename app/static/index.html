@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RescueSignal AI - Communication d'urgence intelligente & résiliente</title>
+  <meta name="description" content="Plateforme de secours intelligente transformant la voix en signal acoustique et optique résilient hors réseau avec AssemblyAI.">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="logo-wrapper">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      </div>
+      <div>
+        <div class="logo-title">RescueSignal AI</div>
+        <div class="logo-subtitle">When communication fails, your voice becomes a signal</div>
+      </div>
+    </div>
+
+    <div class="header-badges">
+      <div class="badge badge-aai">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Powered by AssemblyAI
+      </div>
+      <div class="badge badge-pulse" id="global-status-badge">
+        Système Opérationnel
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="demo-container">
+    <div class="demo-hero">
+      <div class="hero-tag">Lablab.ai • AssemblyAI Voice Agent Hackathon</div>
+      <h1>Communication d'Urgence Résiliente Hors-Réseau</h1>
+      <p>
+        Lorsque les réseaux cellulaires et Internet s'effondrent, RescueSignal AI transforme la parole humaine en 
+        <strong>paquet de données d'urgence ultracompact</strong> transmis via <strong>signaux acoustiques (FSK), optiques (Flash) et maillage local</strong>.
+      </p>
+
+      <div class="quick-links">
+        <a href="/victim" target="_blank" class="btn-secondary" title="Ouvrir la vue victime sur un autre appareil">
+          📱 Ouvrir Vue Victime Seule (/victim)
+        </a>
+        <a href="/rescuer" target="_blank" class="btn-secondary" title="Ouvrir le poste secours sur un écran dédié">
+          🚑 Ouvrir Poste Secours Seul (/rescuer)
+        </a>
+      </div>
+    </div>
+
+    <!-- Dual Phone Demonstration Section -->
+    <div class="phones-grid">
+
+      <!-- PHONE A : VICTIM TRANSMITTER -->
+      <div class="phone-mockup transmitter-frame" id="victim-container">
+        <div class="phone-notch">
+          <div class="phone-speaker"></div>
+        </div>
+
+        <div class="phone-header-info">
+          <span>ÉMETTEUR VICTIME (TERMINAL A)</span>
+          <div class="network-status-bar">
+            <span class="net-indicator off" title="Aucun réseau mobile">4G ❌</span>
+            <span class="net-indicator off" title="Aucun accès Internet">Internet ❌</span>
+            <span class="net-indicator on" id="tx-battery-indicator" title="Autonomie estimée en balisage d'urgence" style="color:#10b981;">🔋 82% • 19h survie</span>
+          </div>
+        </div>
+
+        <div class="phone-screen" id="victim-screen">
+          
+          <!-- Input Mode Switcher -->
+          <div class="input-mode-tabs">
+            <button type="button" class="mode-tab-btn active" id="tab-btn-voice">
+              🎙️ Mode Vocal
+            </button>
+            <button type="button" class="mode-tab-btn" id="tab-btn-silent">
+              🤫 Mode Silencieux
+            </button>
+          </div>
+
+          <!-- Micro / Voice Agent Push Area (Mode Vocal) -->
+          <div id="voice-control-wrapper">
+            <div class="mic-control-area">
+              <button class="mic-button" id="btn-mic-record" title="Appuyez pour parler">
+                <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+              </button>
+              <div class="mic-label" id="mic-status-label">Appuyez pour Parler</div>
+              <div class="mic-subtext">Décrivez la situation d'urgence à voix haute</div>
+            </div>
+
+            <!-- Scenario Presets -->
+            <div class="card-section">
+              <div class="card-title">
+                <span>Scénarios d'Urgence Simulés</span>
+                <span style="font-size:0.65rem; color:var(--color-cyan);">1-CLIC DÉMO</span>
+              </div>
+              <div class="scenario-chips">
+                <button class="chip-btn scenario-chip" data-prompt="Nous sommes trois personnes coincées sous les décombres. Une personne est blessée à la jambe et une autre est inconsciente. Besoin d'aide médicale urgente.">
+                  🏢 Effondrement Immeuble
+                </button>
+                <button class="chip-btn scenario-chip" data-prompt="Incendie déclaré au deuxième étage, fumée toxique très dense, deux personnes bloquées sans issue.">
+                  🔥 Incendie & Fumée
+                </button>
+                <button class="chip-btn scenario-chip" data-prompt="Inondation rapide dans la cave, niveau d'eau à un mètre cinquante, quatre personnes en danger d'hypothermie.">
+                  🌊 Inondation Sous-sol
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Silent SOS Mode Area (Mode Silencieux) -->
+          <div id="silent-control-area" class="silent-control-area">
+            <div class="card-section">
+              <div class="card-title">
+                <span>Saisie Tactile d'Urgence Silencieuse</span>
+                <span class="badge" style="background:rgba(239,68,68,0.2); color:#ef4444; border:1px solid #ef4444;">DISCRET</span>
+              </div>
+
+              <!-- Situation -->
+              <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:4px;">Type d'événement :</div>
+              <div class="situation-select-grid" id="silent-situation-picker">
+                <button type="button" class="situation-chip active" data-sit="BUILDING_COLLAPSE">🏢 Décombres</button>
+                <button type="button" class="situation-chip" data-sit="FIRE">🔥 Incendie</button>
+                <button type="button" class="situation-chip" data-sit="FLOOD">🌊 Inondation</button>
+                <button type="button" class="situation-chip" data-sit="CONFINED_SPACE">🕳️ Confiné</button>
+                <button type="button" class="situation-chip" data-sit="THREAT">👤 Menace</button>
+                <button type="button" class="situation-chip" data-sit="MEDICAL">🩺 Médical</button>
+              </div>
+
+              <!-- Counters -->
+              <div style="margin-top:10px;">
+                <div class="stepper-row">
+                  <div class="stepper-label">👥 Personnes au total</div>
+                  <div class="stepper-controls">
+                    <button type="button" class="stepper-btn" id="btn-dec-people">-</button>
+                    <span class="stepper-val" id="val-silent-people">3</span>
+                    <button type="button" class="stepper-btn" id="btn-inc-people">+</button>
+                  </div>
+                </div>
+
+                <div class="stepper-row">
+                  <div class="stepper-label">🤕 Blessé(s)</div>
+                  <div class="stepper-controls">
+                    <button type="button" class="stepper-btn" id="btn-dec-injured">-</button>
+                    <span class="stepper-val" id="val-silent-injured" style="color:var(--color-warning);">1</span>
+                    <button type="button" class="stepper-btn" id="btn-inc-injured">+</button>
+                  </div>
+                </div>
+
+                <div class="stepper-row">
+                  <div class="stepper-label">🫀 Inconscient(s)</div>
+                  <div class="stepper-controls">
+                    <button type="button" class="stepper-btn" id="btn-dec-unconscious">-</button>
+                    <span class="stepper-val" id="val-silent-unconscious" style="color:var(--color-danger);">1</span>
+                    <button type="button" class="stepper-btn" id="btn-inc-unconscious">+</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Urgency -->
+              <div style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">Degré d'Urgence Vitale :</div>
+              <div class="urgency-pills" id="silent-urgency-picker">
+                <button type="button" class="urgency-pill p-crit active" data-urg="CRITICAL">🔴 CRITIQUE</button>
+                <button type="button" class="urgency-pill p-urg" data-urg="URGENT">🟠 URGENT</button>
+                <button type="button" class="urgency-pill p-mod" data-urg="MODERATE">🟡 STABLE</button>
+              </div>
+
+              <!-- Trigger Button -->
+              <button type="button" class="btn-silent-sos" id="btn-trigger-silent-sos">
+                🚨 GÉNÉRER & DIFFUSER SOS SILENCIEUX
+              </button>
+            </div>
+          </div>
+
+          <!-- Semantic Extraction Results -->
+          <div class="card-section">
+            <div class="card-title">
+              <span>Compréhension AssemblyAI Voice Agent</span>
+              <span class="badge" id="tx-info-urgency">CRITIQUE</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:0.8rem;">
+              <div><strong>Situation:</strong> <span id="tx-info-type" style="color:var(--color-cyan);">Effondrement</span></div>
+              <div><strong>Lieu:</strong> <span id="tx-info-location" style="color:#cbd5e1;">Zone Décombres</span></div>
+              <div><strong>Personnes:</strong> <span id="tx-info-people" style="color:#fff; font-weight:700;">3</span></div>
+              <div><strong>Blessé(s):</strong> <span id="tx-info-injured" style="color:#f59e0b; font-weight:700;">1</span></div>
+              <div><strong>Inconscient(s):</strong> <span id="tx-info-unconscious" style="color:#ef4444; font-weight:700;">1</span></div>
+            </div>
+          </div>
+
+          <!-- Compact Emergency Data Packet -->
+          <div class="card-section">
+            <div class="card-title">
+              <span>Emergency Data Packet (Compressé)</span>
+              <span id="tx-packet-size" style="font-size:0.7rem; color:var(--color-cyan);">44 octets</span>
+            </div>
+            <div class="packet-display-box">
+              <div class="packet-raw" id="tx-packet-raw">RS1|BLD|P3|I1|U1|M1|HNIL|LOC#E4A7</div>
+              <div class="packet-meta-row">
+                <span>Protocole: RS1/FSK</span>
+                <span id="tx-packet-chk">CRC #E4A7 Valide</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Multi-modal Transmission Triggers -->
+          <div class="card-section">
+            <div class="card-title">
+              <span>Modes de Transmission Locaux</span>
+            </div>
+            <div class="channel-actions-grid">
+              <button class="btn-transmit btn-sound" id="btn-tx-acoustic">
+                🔊 Émettre Signal Acoustique
+              </button>
+              <button class="btn-transmit btn-light" id="btn-tx-optical">
+                💡 Émettre Flash Lumineux
+              </button>
+              <button class="btn-transmit btn-mesh" id="btn-tx-mesh">
+                📶 Diffuser sur Réseau P2P Local (BLE / Mesh)
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PHONE B : RESCUE RECEIVER & TRIAGE -->
+      <div class="phone-mockup receiver-frame" id="rescuer-container">
+        <div class="phone-notch">
+          <div class="phone-speaker"></div>
+        </div>
+
+        <div class="phone-header-info">
+          <span>POSTE SECOURS & DÉCODEUR (TERMINAL B)</span>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span class="radar-dot"></span>
+            <span style="color:var(--color-cyan); font-weight:700;" id="rx-mesh-status">ÉCOUTE ACOUSTIQUE ACTIVE</span>
+          </div>
+        </div>
+
+        <div class="phone-screen" id="rescuer-screen">
+          
+          <!-- Live Oscilloscope Audio Visualizer -->
+          <div class="card-section">
+            <div class="card-title">
+              <span>Moniteur Fréquentiel Acoustique</span>
+              <span id="rx-freq-detection" class="badge" style="font-size:0.68rem; color:var(--text-dim); border:1px solid var(--border-color);">Écoute micro en veille</span>
+            </div>
+            <div class="waveform-container">
+              <canvas id="receiver-waveform" class="waveform-canvas" width="400" height="50"></canvas>
+            </div>
+            <button type="button" class="btn-secondary" id="btn-rx-mic-listen" style="width:100%; margin-top:8px; padding:7px 10px; font-size:0.75rem; font-weight:700; display:flex; align-items:center; justify-content:center; gap:6px;">
+              <span>🎙️ Activer Écoute Acoustique Réelle (Micro)</span>
+            </button>
+          </div>
+
+          <!-- Receiver Triage Feed -->
+          <div class="card-section" style="flex:1;">
+            <div class="card-title">
+              <span>Triage d'Urgence Décodé en Temps Réel</span>
+              <span style="font-size:0.68rem; color:var(--color-success);">CRC CONFORME</span>
+            </div>
+
+            <div id="receiver-feed">
+              <div class="rx-placeholder" style="text-align:center; padding:2rem 1rem; color:var(--text-dim); font-size:0.85rem;">
+                En attente de signal d'urgence entrant...<br>
+                <span style="font-size:0.75rem; color:#64748b;">(Cliquez sur « Émettre » sur le téléphone émetteur à gauche)</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Full-screen Strobe Flash Overlay for Optical SOS -->
+  <div id="optical-strobe-overlay"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>
+      <strong>RescueSignal AI</strong> — Projet développé pour le 
+      <span class="footer-highlight">AssemblyAI Voice Agent Hackathon</span> sur <span class="footer-highlight">lablab.ai</span>.
+    </p>
+    <p style="margin-top:6px; color:#475569;">
+      Architecture : AssemblyAI Universal-1 Speech-to-Text • LeMUR Voice Triage Agent • Resilient Audio FSK Synthesizer • P2P Mesh
+    </p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/static/js/sound_engine.js"></script>
+  <script src="/static/js/transmitter.js"></script>
+  <script src="/static/js/receiver.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      window.transmitterInstance = new VictimTransmitter("victim-screen");
+      window.receiverInstance = new RescuerReceiver("receiver-feed");
+    });
+  </script>
+</body>
+</html>
