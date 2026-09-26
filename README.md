@@ -33,6 +33,43 @@ During natural or industrial disasters (earthquakes, structural collapse, floods
 
 ---
 
+## 🌐 3-Tier Offline Resilience Architecture: How It Operates Without Internet
+
+A critical question in disaster response: **How does an AI voice agent function when cellular towers and Internet backbones collapse completely?**
+
+RescueSignal AI solves this through a **3-Tier Graceful Degradation Architecture**:
+
+```text
+┌────────────────────────────────────────────────────────────────────────┐
+│                        3-TIER RESILIENCE PIPELINE                      │
+├────────────────────────────────────────────────────────────────────────┤
+│ TIER 1: CLOUD ASSEMBLYAI (Universal-1 Speech-to-Text & LeMUR)          │
+│ • Deployed whenever disaster micro-relays (Starlink/drone mesh) exist. │
+│ • Deep multi-language transcription & medical vocabulary boost.        │
+├────────────────────────────────────────────────────────────────────────┤
+│ TIER 2: EMBEDDED LOCAL SPEECH ENGINE (100% Offline Failover)           │
+│ • Automatically triggers if AssemblyAI cloud connection drops to 0%.  │
+│ • In-browser/on-device speech parser with sub-second zero-lag failover.│
+│ • No internet connection required to extract critical triage data.     │
+├────────────────────────────────────────────────────────────────────────┤
+│ TIER 3: STEALTH SILENT TACTILE MODE (Zero Voice, Zero Connectivity)    │
+│ • 1-click tactile grid for injured or silent victims in smoke/hazards. │
+│ • Generates RS1 44-byte packet directly in device CPU.                 │
+│ • Emits physical acoustic FSK sound & optical Morse strobes locally.   │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+1. **Tier 1 — AssemblyAI Cloud (High-Fidelity Gateway)**:  
+   During search and rescue operations, rescue vehicles (emergency mobile trucks) or low-altitude surveillance drones often carry emergency Wi-Fi or satellite micro-gateways. As soon as a low-bandwidth channel opens, AssemblyAI's cloud models process raw audio with maximum phonetic accuracy and vocabulary boosting.
+
+2. **Tier 2 — Embedded Local Fallback Engine (Zero Network)**:  
+   If the terminal is completely isolated with **0% Internet availability**, our built-in fallback engine in [`assemblyai_service.py`](app/services/assemblyai_service.py) takes over seamlessly. The local client executes client-side entity extraction, identifying victim counts, unconscious states, and critical injuries without calling external cloud servers.
+
+3. **Tier 3 — Silent Non-Verbal Touch Beaconing (Zero Sound, Zero Network)**:  
+   When a victim cannot breathe or speak due to smoke inhalation, dust, or physical trauma, they activate **Silent Mode**. A single tap on the disaster preset generates the 44-byte RS1 packet entirely on-device and broadcasts it through the phone's physical speaker (FSK acoustic burst) and optical LED screen strobe without a single bit of Internet data.
+
+---
+
 ## 📂 Repository Architecture
 
 ```text
