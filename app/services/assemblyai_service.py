@@ -133,18 +133,18 @@ def extract_entities_locally(text: str) -> EmergencyExtraction:
         hazards.append("NONE")
 
     # 7. Location Context
-    loc = "Zone Sinistrée"
+    loc = "Disaster Zone"
     loc_match = re.search(r'(?:dans|sous|au|à|près de|in|under|at)\s+([a-zA-Z0-9\séèêàâôûîïç\-\_]{3,25})', t_lower)
     if loc_match:
         extracted_loc = loc_match.group(1).strip()
         # filter out generic words
-        if extracted_loc not in ["les décombres", "l'immeuble", "danger", "urgence", "nous"]:
+        if extracted_loc not in ["les décombres", "l'immeuble", "danger", "urgence", "nous", "rubble", "building"]:
             loc = extracted_loc.title()
 
     summary = (
-        f"{situation.replace('_', ' ').title()}: {people_count} pers., "
-        f"{injured_count} blessé(s), {unconscious_count} inconscient(s). "
-        f"Urgence: {medical_urgency}. Menaces: {', '.join(hazards)}."
+        f"{situation.replace('_', ' ').title()}: {people_count} people, "
+        f"{injured_count} injured, {unconscious_count} unconscious. "
+        f"Urgency: {medical_urgency}. Hazards: {', '.join(hazards)}."
     )
 
     return EmergencyExtraction(
@@ -158,7 +158,7 @@ def extract_entities_locally(text: str) -> EmergencyExtraction:
         summary=summary,
         confidence=0.96,
         raw_transcript=text,
-        language="fr" if any(c in "éèêàâôûîïç" for c in t_lower) or "sommes" in t_lower else "en"
+        language="en" if not any(c in "éèêàâôûîïç" for c in t_lower) else "fr"
     )
 
 class AssemblyAIVoiceAgent:

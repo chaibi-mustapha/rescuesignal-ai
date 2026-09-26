@@ -34,20 +34,20 @@ class RescuerReceiver {
       if (this.isMicListening) {
         window.soundEngine.stopMicListening();
         this.isMicListening = false;
-        btn.innerHTML = `<span>🎙️ Activer Écoute Acoustique (Micro)</span>`;
+        btn.innerHTML = `<span>🎙️ Enable Live Acoustic Listening (Mic)</span>`;
         btn.classList.remove("active-listening");
         if (detBadge) {
-          detBadge.innerText = "Écoute micro en veille";
+          detBadge.innerText = "Microphone Standby";
           detBadge.style.color = "var(--text-dim)";
           detBadge.style.borderColor = "var(--border-color)";
         }
       } else {
-        btn.innerHTML = `<span>⏳ Activation microphone...</span>`;
+        btn.innerHTML = `<span>⏳ Activating microphone...</span>`;
         const ok = await window.soundEngine.startMicListening(
           canvas,
           (data) => {
             if (detBadge) {
-              detBadge.innerHTML = `🚨 ONDE DÉTECTÉE: <strong>${data.freq} Hz (${data.type})</strong>`;
+              detBadge.innerHTML = `🚨 WAVE DETECTED: <strong>${data.freq} Hz (${data.type})</strong>`;
               detBadge.style.color = "#10b981";
               detBadge.style.borderColor = "#10b981";
               detBadge.classList.add("pulse-highlight");
@@ -58,19 +58,19 @@ class RescuerReceiver {
           },
           (err) => {
             console.warn("Mic listen err:", err);
-            btn.innerHTML = `<span>❌ Accès micro refusé</span>`;
+            btn.innerHTML = `<span>❌ Microphone access denied</span>`;
             setTimeout(() => {
-              btn.innerHTML = `<span>🎙️ Activer Écoute Acoustique (Micro)</span>`;
+              btn.innerHTML = `<span>🎙️ Enable Live Acoustic Listening (Mic)</span>`;
             }, 2000);
           }
         );
 
         if (ok) {
           this.isMicListening = true;
-          btn.innerHTML = `<span>🛑 Arrêter Écoute Micro</span>`;
+          btn.innerHTML = `<span>🛑 Stop Microphone Listening</span>`;
           btn.classList.add("active-listening");
           if (detBadge) {
-            detBadge.innerText = "Écoute active (FFT 1200 / 2200 Hz)";
+            detBadge.innerText = "Active Listening (FFT 1200 / 2200 Hz)";
             detBadge.style.color = "var(--color-cyan)";
             detBadge.style.borderColor = "var(--color-cyan)";
           }
@@ -90,7 +90,7 @@ class RescuerReceiver {
         console.log("Connected to RescueSignal Local Mesh");
         const statusEl = document.getElementById("rx-mesh-status");
         if (statusEl) {
-          statusEl.innerText = "CANAL LOCAL ACTIF (ÉCOUTE)";
+          statusEl.innerText = "LOCAL CHANNEL ACTIVE (LISTENING)";
           statusEl.style.color = "var(--color-cyan)";
         }
       };
@@ -131,7 +131,7 @@ class RescuerReceiver {
 
     // Determine Triage Category
     const isCritical = payload.medical_urgency === "CRITICAL" || payload.unconscious_count > 0;
-    const priorityCode = isCritical ? "P1 - CRITIQUE" : (payload.injured_count > 0 ? "P2 - URGENT" : "P3 - MODÉRÉ");
+    const priorityCode = isCritical ? "P1 - CRITICAL" : (payload.injured_count > 0 ? "P2 - URGENT" : "P3 - MODERATE");
     const priorityClass = isCritical ? "critical" : "urgent";
     const badgeClass = isCritical ? "p1" : "p2";
 
@@ -152,37 +152,37 @@ class RescuerReceiver {
       </div>
 
       <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:8px;">
-        ${payload.summary || "Alerte reçue via onde acoustique / maillage local"}
+        ${payload.summary || "Alert received via acoustic wave / local mesh"}
       </div>
 
       <div class="victim-stats-grid">
         <div class="stat-box">
           <div class="val">${payload.people_count}</div>
-          <div class="lbl">Personnes</div>
+          <div class="lbl">People</div>
         </div>
         <div class="stat-box">
           <div class="val" style="color:#f59e0b;">${payload.injured_count}</div>
-          <div class="lbl">Blessé(s)</div>
+          <div class="lbl">Injured</div>
         </div>
         <div class="stat-box">
           <div class="val" style="color:#ef4444;">${payload.unconscious_count}</div>
-          <div class="lbl">Inconscient(s)</div>
+          <div class="lbl">Unconscious</div>
         </div>
       </div>
 
       <div style="font-size:0.75rem; color:var(--text-dim); margin-top:6px; font-family:monospace; background:rgba(0,0,0,0.3); padding:4px 8px; border-radius:4px; word-break:break-all;">
-        PAQUET: <span style="color:#38bdf8;">${packet.compact_string}</span>
+        PACKET: <span style="color:#38bdf8;">${packet.compact_string}</span>
       </div>
 
       <div class="checklist-group">
-        <div style="font-size:0.7rem; font-weight:700; color:var(--color-cyan); text-transform:uppercase; margin-bottom:4px;">Protocole d'intervention :</div>
-        <label class="check-item"><input type="checkbox" checked> Unité médicale de réanimation mobilisée</label>
-        <label class="check-item"><input type="checkbox" ${payload.situation_type.includes("BUILDING") ? "checked" : ""}> Matériel de désincarcération & levage lourd</label>
-        <label class="check-item"><input type="checkbox" ${payload.hazards.includes("GAS_LEAK") ? "checked" : ""}> Détecteurs atmosphériques & oxygénothérapie</label>
+        <div style="font-size:0.7rem; font-weight:700; color:var(--color-cyan); text-transform:uppercase; margin-bottom:4px;">Emergency Response Protocol:</div>
+        <label class="check-item"><input type="checkbox" checked> ICU Resuscitation Unit Dispatched</label>
+        <label class="check-item"><input type="checkbox" ${payload.situation_type.includes("BUILDING") ? "checked" : ""}> Heavy Extrication & Lifting Gear En Route</label>
+        <label class="check-item"><input type="checkbox" ${payload.hazards.includes("GAS_LEAK") ? "checked" : ""}> Hazmat & Oxygen Atmospheric Sensors Ready</label>
       </div>
 
-      <button class="btn-secondary" style="width:100%; margin-top:10px; justify-content:center; background:rgba(6, 182, 212, 0.15); border-color:var(--color-cyan); color:#67e8f9;" onclick="this.innerText='✅ Signal Verrouillé & Pris en Charge'">
-        Verrouiller & Confirmer Réception
+      <button class="btn-secondary" style="width:100%; margin-top:10px; justify-content:center; background:rgba(6, 182, 212, 0.15); border-color:var(--color-cyan); color:#67e8f9;" onclick="this.innerText='✅ Signal Acknowledged & Response Dispatched'">
+        Acknowledge & Confirm Reception
       </button>
     `;
 

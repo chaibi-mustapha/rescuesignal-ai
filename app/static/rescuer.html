@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RescueSignal AI - Poste de Secours & Triage</title>
-  <meta name="description" content="Station de réception et de décodage des signaux d'urgence acoustiques et locaux.">
+  <title>RescueSignal AI - Rescuer Station & Triage</title>
+  <meta name="description" content="Receiver and decoder station for acoustic and local emergency signals.">
   <link rel="stylesheet" href="/static/css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
   <style>
@@ -23,40 +23,40 @@
         <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       </div>
       <div>
-        <div class="logo-title">Station de Secours Avancée</div>
-        <div class="logo-subtitle">Décodeur Acoustique & Local Mesh • RescueSignal AI</div>
+        <div class="logo-title">Advanced Rescue Station</div>
+        <div class="logo-subtitle">Acoustic Decoder & Local Mesh • RescueSignal AI</div>
       </div>
     </div>
     <div style="display:flex; align-items:center; gap:8px;">
       <span class="radar-dot"></span>
-      <span id="rx-mesh-status" style="font-weight:700; color:var(--color-cyan); font-size:0.85rem;">ÉCOUTE EN COURS</span>
+      <span id="rx-mesh-status" style="font-weight:700; color:var(--color-cyan); font-size:0.85rem;">LISTENING IN PROGRESS</span>
     </div>
   </header>
 
   <!-- Audio Spectrum Monitor -->
   <div class="card-section" style="margin-bottom:1.5rem;">
     <div class="card-title">
-      <span>Spectromètre Acoustique & Analyseur d'Ondes</span>
-      <span id="rx-freq-detection" class="badge" style="color:var(--text-dim); border:1px solid var(--border-color);">Écoute micro en veille</span>
+      <span>Acoustic Spectrometer & Wave Analyzer</span>
+      <span id="rx-freq-detection" class="badge" style="color:var(--text-dim); border:1px solid var(--border-color);">Microphone Standby</span>
     </div>
     <div class="waveform-container" style="height:70px;">
       <canvas id="receiver-waveform" class="waveform-canvas" width="850" height="70"></canvas>
     </div>
     <button type="button" class="btn-secondary" id="btn-rx-mic-listen" style="width:100%; margin-top:10px; padding:10px; font-weight:700; display:flex; align-items:center; justify-content:center; gap:8px;">
-      <span>🎙️ Activer Écoute Acoustique Réelle (Microphone Secours)</span>
+      <span>🎙️ Enable Live Acoustic Listening (Rescue Microphone)</span>
     </button>
   </div>
 
   <!-- Triage Feed -->
   <div class="card-section">
     <div class="card-title">
-      <span>Signaux d'Urgence Détectés & Priorisation Médicale</span>
-      <span style="color:var(--color-success);">DÉCODAGE SÉMANTIQUE TEMPS RÉEL</span>
+      <span>Detected Emergency Signals & Medical Prioritization</span>
+      <span style="color:var(--color-success);">REAL-TIME SEMANTIC DECODING</span>
     </div>
 
     <div id="receiver-feed">
       <div class="rx-placeholder" style="text-align:center; padding:3rem 1rem; color:var(--text-dim); font-size:0.95rem;">
-        Station de secours prête. En attente de paquets d'urgence émis par les victimes...
+        Rescue station ready. Waiting for emergency packets broadcast by victims...
       </div>
     </div>
   </div>

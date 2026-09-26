@@ -16,8 +16,8 @@ class VictimTransmitter {
   init() {
     this.setupEventListeners();
     this.initBatteryIndicator();
-    // Default initial demonstration packet
-    this.loadScenarioText("Nous sommes trois personnes coincées sous les décombres. Une personne est blessée à la jambe et une autre est inconsciente. Besoin d'aide médicale urgente.");
+    // Default initial demonstration packet in English
+    this.loadScenarioText("We are three people trapped under rubble. One person is injured in the leg and another is unconscious. Urgent medical assistance needed.");
   }
 
   initBatteryIndicator() {
@@ -29,7 +29,7 @@ class VictimTransmitter {
         const update = () => {
           const pct = Math.round(battery.level * 100);
           const hours = Math.round((pct / 100) * 24);
-          el.innerText = `🔋 ${pct}% • ${hours}h survie`;
+          el.innerText = `🔋 ${pct}% • ${hours}h survival`;
         };
         update();
         battery.addEventListener("levelchange", update);
@@ -145,7 +145,7 @@ class VictimTransmitter {
   async sendSilentEmergency() {
     const btn = document.getElementById("btn-trigger-silent-sos");
     const origText = btn ? btn.innerHTML : "";
-    if (btn) btn.innerHTML = `<span>⏳ Envoi silencieux en cours...</span>`;
+    if (btn) btn.innerHTML = `<span>⏳ Broadcasting silent SOS...</span>`;
 
     // Extract values
     const activeSitChip = document.querySelector("#silent-situation-picker .situation-chip.active");
@@ -165,7 +165,7 @@ class VictimTransmitter {
       unconscious_count: unconsciousCount,
       medical_urgency: medicalUrgency,
       hazards: [],
-      location_details: "Zone Décombres (Alerte Silencieuse)"
+      location_details: "Rubble Zone (Silent Alert)"
     };
 
     try {
@@ -180,7 +180,7 @@ class VictimTransmitter {
         this.applyPacket(data.packet, data.morse_sequence);
 
         if (btn) {
-          btn.innerHTML = `<span>✅ SOS SILENCIEUX ENVOYÉ !</span>`;
+          btn.innerHTML = `<span>✅ SILENT SOS BROADCAST!</span>`;
           btn.style.background = "linear-gradient(135deg, #10b981, #047857)";
           setTimeout(() => {
             btn.innerHTML = origText;
@@ -191,7 +191,7 @@ class VictimTransmitter {
     } catch (err) {
       console.error("Silent emergency failed:", err);
       if (btn) {
-        btn.innerHTML = `<span>❌ Erreur transmission</span>`;
+        btn.innerHTML = `<span>❌ Transmission failed</span>`;
         setTimeout(() => { btn.innerHTML = origText; }, 1500);
       }
     }
@@ -208,7 +208,7 @@ class VictimTransmitter {
       }
       this.isRecording = false;
       micBtn.classList.remove("recording");
-      if (micLabel) micLabel.innerText = "Traitement IA en cours...";
+      if (micLabel) micLabel.innerText = "Processing Voice AI...";
     } else {
       // Start recording
       try {
@@ -229,11 +229,11 @@ class VictimTransmitter {
         this.mediaRecorder.start();
         this.isRecording = true;
         micBtn.classList.add("recording");
-        if (micLabel) micLabel.innerText = "Écoute en cours... Parlez !";
+        if (micLabel) micLabel.innerText = "Listening... Speak now!";
       } catch (err) {
         console.warn("Microphone access denied or not available, using voice prompt simulation:", err);
-        this.loadScenarioText("SOS secours trois personnes bloquées dont un blessé grave");
-        if (micLabel) micLabel.innerText = "Mode Simulation Vocale Activé";
+        this.loadScenarioText("We are three people trapped under rubble. One person is injured and another is unconscious. Urgent help needed.");
+        if (micLabel) micLabel.innerText = "Voice Simulation Mode Active";
       }
     }
   }
@@ -255,19 +255,19 @@ class VictimTransmitter {
       }
     } catch (e) {
       console.error("Audio processing failed:", e);
-      if (micLabel) micLabel.innerText = "Erreur - Repli sur moteur local";
+      if (micLabel) micLabel.innerText = "Error - Fallback to local engine";
     }
   }
 
   async loadScenarioText(promptText) {
     const micLabel = document.getElementById("mic-status-label");
-    if (micLabel) micLabel.innerText = "Analyse AssemblyAI en cours...";
+    if (micLabel) micLabel.innerText = "Analyzing with AssemblyAI...";
 
     try {
       const response = await fetch("/api/voice/process-text", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: promptText, language: "fr" })
+        body: JSON.stringify({ text: promptText, language: "en" })
       });
 
       const data = await response.json();
@@ -284,17 +284,17 @@ class VictimTransmitter {
     this.currentMorse = morse;
 
     const micLabel = document.getElementById("mic-status-label");
-    if (micLabel) micLabel.innerText = "Prêt à transmettre";
+    if (micLabel) micLabel.innerText = "Ready to broadcast";
 
     // Update UI elements
     const rawBox = document.getElementById("tx-packet-raw");
     if (rawBox) rawBox.innerText = packet.compact_string;
 
     const sizeEl = document.getElementById("tx-packet-size");
-    if (sizeEl) sizeEl.innerText = `${packet.byte_size} octets`;
+    if (sizeEl) sizeEl.innerText = `${packet.byte_size} bytes`;
 
     const chkEl = document.getElementById("tx-packet-chk");
-    if (chkEl) chkEl.innerText = `CRC #${packet.checksum}`;
+    if (chkEl) chkEl.innerText = `CRC #${packet.checksum} Valid`;
 
     // Fill Extraction Details
     const p = packet.payload;
@@ -317,20 +317,20 @@ class VictimTransmitter {
     }
 
     const locEl = document.getElementById("tx-info-location");
-    if (locEl) locEl.innerText = p.location_details || "Zone Détectée";
+    if (locEl) locEl.innerText = p.location_details || "Disaster Zone";
   }
 
   async transmitAcoustic() {
     if (!this.currentPacket) return;
     const btn = document.getElementById("btn-tx-acoustic");
     const origHtml = btn.innerHTML;
-    btn.innerHTML = `<span>🔊 Émission en cours...</span>`;
+    btn.innerHTML = `<span>🔊 Broadcasting acoustic burst...</span>`;
     btn.disabled = true;
 
     // Play FSK acoustic burst using Sound Engine
     await window.soundEngine.playAcousticFSK(this.currentPacket.compact_string, (cur, total) => {
       const pct = Math.round((cur / total) * 100);
-      btn.innerText = `🔊 Signal Sonore: ${pct}%`;
+      btn.innerText = `🔊 Acoustic Signal: ${pct}%`;
     });
 
     btn.innerHTML = origHtml;
@@ -373,7 +373,7 @@ class VictimTransmitter {
     if (!this.currentPacket) return;
     const btn = document.getElementById("btn-tx-mesh");
     const origHtml = btn.innerHTML;
-    btn.innerHTML = `<span>📶 Diffusion Mesh envoyée !</span>`;
+    btn.innerHTML = `<span>📶 P2P Mesh Broadcast Sent!</span>`;
 
     try {
       await fetch("/api/packet/broadcast", {
