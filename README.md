@@ -27,6 +27,17 @@ During natural or industrial disasters (earthquakes, structural collapse, floods
 
 ## 🏆 Alignment with the AssemblyAI Voice Agent Hackathon
 
+### 💡 Why AssemblyAI is Indispensable: The Core Engine
+> **"Without AssemblyAI, RescueSignal AI literally cannot function."**
+
+Here is why AssemblyAI is the irreplaceable heartbeat of this life-saving platform:
+
+1. **Hands-Free Lifeline in Zero Visibility**: A trapped victim buried under building collapse debris, pinned beneath concrete slabs, or choking on dense smoke **cannot physically type on a touchscreen**. Their voice is their sole remaining survival tool.
+2. **Vital Acoustic Gateway with Universal-1**: AssemblyAI serves as the frontline acoustic gateway (`SpeechModel.best`). It cuts through reverberation, acoustic rubble distortions, and trembling breaths to transcribe critical distress speech in real-time milliseconds.
+3. **Emergency Medical `word_boost`**: We leverage AssemblyAI's specialized vocabulary boost API to heavily weight life-critical terms that ordinary models fail to catch in noisy environments:
+   - *Emergency boost vocabulary*: `"rubble"`, `"collapse"`, `"unconscious"`, `"fracture"`, `"hemorrhage"`, `"asphyxia"`, `"gas leak"`, `"décombres"`, `"blessé"`.
+4. **Zero-Configuration Multi-Language Auto-Detection**: When catastrophic earthquakes hit international cities and tourist destinations, AssemblyAI automatically detects whether the victim is speaking English, French, Spanish, Japanese, or any supported language on the fly—zero manual switching required.
+
 - **Voice AI Core**: Deep integration with AssemblyAI's state-of-the-art Speech-to-Text (`SpeechModel.best`, multi-language automatic detection, and emergency medical `word_boost` vocabulary).
 - **Agentic Workflow**: End-to-end autonomous pipeline from voice capture to semantic understanding, intelligent data compression, dynamic channel selection, and automated rescue triage assignment.
 - **Extreme Resilience**: Fully connected to AssemblyAI Cloud under nominal conditions, with an instant offline semantic fallback engine to guarantee zero failure in completely disconnected disaster zones.
