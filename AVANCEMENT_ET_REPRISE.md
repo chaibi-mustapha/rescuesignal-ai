@@ -1,8 +1,10 @@
 # 📌 RescueSignal AI — État d'Avancement & Guide de Reprise
 
-> **Dernière mise à jour** : 26 septembre 2026 (18:20)  
+> **Dernière mise à jour** : 26 septembre 2026 (21:25)  
 > **Concours** : AssemblyAI Voice Agent Hackathon sur [lablab.ai](https://lablab.ai/ai-hackathons/assemblyai-voice-agent-hackathon)  
-> **Statut global** : Prototype complet, 100% testé et connecté en direct au Cloud AssemblyAI. Prêt pour publication en ligne et démo.
+> **Statut global** : Déployé en ligne, 100% en anglais (UI, Code, Docs), dépôt GitHub public actif.
+> **Dépôt GitHub** : [https://github.com/chaibi-mustapha/rescuesignal-ai](https://github.com/chaibi-mustapha/rescuesignal-ai)  
+> **Application en Ligne** : [https://rescuesignal-ai.onrender.com](https://rescuesignal-ai.onrender.com)  
 
 ---
 
