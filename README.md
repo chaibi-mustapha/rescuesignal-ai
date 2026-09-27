@@ -68,40 +68,90 @@ RescueSignal AI addresses two distinct life-threatening contexts with tailored o
 
 ---
 
-## 🌐 3-Tier Offline Resilience Architecture: How It Operates Without Internet
+## 🌐 3-Tier Offline Resilience Architecture: How It Connects with AssemblyAI
 
-A critical question in disaster response: **How does an AI voice agent function when cellular towers and Internet backbones collapse completely?**
+A critical architectural question in disaster response:  
+**How does an AI voice agent like AssemblyAI function when cellular towers and commercial Internet backbones collapse completely?**
 
-RescueSignal AI solves this through a **3-Tier Graceful Degradation Architecture**:
+RescueSignal AI bridges this gap using a **Dual-Path Hybrid Architecture**:
 
 ```text
-┌────────────────────────────────────────────────────────────────────────┐
-│                        3-TIER RESILIENCE PIPELINE                      │
-├────────────────────────────────────────────────────────────────────────┤
-│ TIER 1: CLOUD ASSEMBLYAI (Universal-1 Speech-to-Text & LeMUR)          │
-│ • Deployed whenever disaster micro-relays (Starlink/drone mesh) exist. │
-│ • Deep multi-language transcription & medical vocabulary boost.        │
-├────────────────────────────────────────────────────────────────────────┤
-│ TIER 2: EMBEDDED LOCAL SPEECH ENGINE (100% Offline Failover)           │
-│ • Automatically triggers if AssemblyAI cloud connection drops to 0%.  │
-│ • In-browser/on-device speech parser with sub-second zero-lag failover.│
-│ • No internet connection required to extract critical triage data.     │
-├────────────────────────────────────────────────────────────────────────┤
-│ TIER 3: STEALTH SILENT TACTILE MODE (Zero Voice, Zero Connectivity)    │
-│ • 1-click tactile grid for injured or silent victims in smoke/hazards. │
-│ • Generates RS1 44-byte packet directly in device CPU.                 │
-│ • Emits physical acoustic FSK sound & optical Morse strobes locally.   │
-└────────────────────────────────────────────────────────────────────────┘
+═══════════════════════════════════════════════════════════════════════════════════════════════════
+                    RESCUESIGNAL AI HYBRID CONNECTIVITY TO ASSEMBLYAI
+═══════════════════════════════════════════════════════════════════════════════════════════════════
+
+  ┌─────────────────────────────────────────────────────────────┐
+  │                 VICTIM UNDER RUBBLE / IN DANGER             │
+  │        (Hands-free Voice Distress OR 1-Tap Stealth SOS)     │
+  └──────────────────────────────┬──────────────────────────────┘
+                                 │
+           ┌─────────────────────┴──────────────────────┐
+           ▼                                            ▼
+   [PATH A: 0% NETWORK BLACKOUT]              [PATH B: DISASTER WI-FI BUBBLE]
+   (Deep rubble, 0 radio signal)              (Drone relay / Starlink truck)
+           │                                            │
+   Local on-device parsing &                  Direct real-time audio stream
+   39-byte RS1 compression                    to AssemblyAI Universal-1 Cloud
+   (RS1|COL|P3|I1|U1|LOC#A402)                          │
+           │                                            │
+   🔊 Physical Acoustic FSK                             │
+   (1200 / 2200 Hz through concrete)                    │
+           │                                            │
+           ▼                                            │
+  ┌─────────────────────────────────┐                   │
+  │ SURFACE RESCUE STATION (TERM B) │                   │
+  │ (Acoustic Geophone & Starlink)  │                   │
+  └────────────────┬────────────────┘                   │
+                   │                                    │
+                   └─────────────────┬──────────────────┘
+                                     ▼
+                   ┌───────────────────────────────────┐
+                   │       ASSEMBLYAI CLOUD ENGINE     │
+                   │  • Universal-1 STT Engine         │
+                   │  • Domain Emergency `word_boost`  │
+                   │  • LeMUR Autonomous Voice Triage  │
+                   │  • Dynamic Priority Multi-Ranking │
+                   └─────────────────┬─────────────────┘
+                                     ▼
+                   ┌───────────────────────────────────┐
+                   │    911 / 112 CRISIS DISPATCHER    │
+                   │  🚨 Trauma ICU #04 Dispatched     │
+                   │  🚨 Heavy Extrication Dispatched  │
+                   │  🚨 Tactical SWAT Alerted         │
+                   └───────────────────────────────────┘
 ```
 
-1. **Tier 1 — AssemblyAI Cloud (High-Fidelity Gateway)**:  
-   During search and rescue operations, rescue vehicles (emergency mobile trucks) or low-altitude surveillance drones often carry emergency Wi-Fi or satellite micro-gateways. As soon as a low-bandwidth channel opens, AssemblyAI's cloud models process raw audio with maximum phonetic accuracy and vocabulary boosting.
+---
 
-2. **Tier 2 — Embedded Local Fallback Engine (Zero Network)**:  
-   If the terminal is completely isolated with **0% Internet availability**, our built-in fallback engine in [`assemblyai_service.py`](app/services/assemblyai_service.py) takes over seamlessly. The local client executes client-side entity extraction, identifying victim counts, unconscious states, and critical injuries without calling external cloud servers.
+### 📡 POINT 1 : The Acoustic FSK Bridge to AssemblyAI (0% Telecom Network)
+**When a victim is buried under 3 meters of reinforced concrete with zero electromagnetic radio reception:**
+1. **At the Bottom (Victim Phone)**: The victim speaks or taps. The on-device engine packages the vital emergency report into an ultra-compact **39-byte RS1 packet** (`RS1|COL|P3|I1|U1|M1|H-RUB|LOC#A402|CRC#8F2A`).
+2. **Physical Penetration**: The phone’s speaker modulates this packet into **Frequency-Shift Keying (FSK 1200 / 2200 Hz)** audio bursts. Sound vibrations physically penetrate through solid concrete slabs and ventilation ducts where 4G/5G radio waves are completely blocked.
+3. **At the Surface (Rescue Station Gateway)**: Search-and-rescue teams (USAR / Fire Department) listen with acoustic sensors and geophones connected to Terminal B.
+4. **The Bridge to AssemblyAI**: The surface rescue terminal is equipped with a tactical mobile satellite uplink (e.g., Starlink / Emergency Response Vehicle). Upon decoding the RS1 packet, it immediately passes the decoded emergency incident to the **AssemblyAI Cloud Pipeline (LeMUR Voice Agent)**.
+5. **Autonomous AI Reasoner**: AssemblyAI correlates the incoming distress call against city-wide hospital capacities, calculates vital triage scores (P1 Critical vs P2 Urgent), and automates deployment orders for Trauma ICUs and heavy hydraulic extrication units.
 
-3. **Tier 3 — Silent Non-Verbal Touch Beaconing (Zero Sound, Zero Network)**:  
-   When a victim cannot breathe or speak due to smoke inhalation, dust, or physical trauma, they activate **Silent Mode**. A single tap on the disaster preset generates the 44-byte RS1 packet entirely on-device and broadcasts it through the phone's physical speaker (FSK acoustic burst) and optical LED screen strobe without a single bit of Internet data.
+---
+
+### 🚁 POINT 2 : Emergency Tactical Wi-Fi Bubbles (Direct Stream to AssemblyAI Universal-1)
+**In modern disaster management, first responders deploy temporary tactical wireless bubbles across the disaster perimeter:**
+1. **Tactical Deployment**:
+   - **Emergency Mobile Command Trucks**: Equipped with mobile Starlink satellite dishes, projecting high-power open Wi-Fi hotspots across rubble zones.
+   - **Tethered Relay Drones**: Low-altitude drones hovering over collapsed sectors, acting as airborne Wi-Fi relays connected to satellite uplinks.
+   - **Portable Mesh Nodes**: Battery-powered P2P Wi-Fi repeaters deployed on debris edges by rescue squads.
+2. **Automatic Uplink Handshake**: As soon as a victim's smartphone detects the open emergency Wi-Fi bubble, RescueSignal AI instantly transitions into **Tier 1 High-Fidelity Streaming Mode**.
+3. **Direct Processing via AssemblyAI Universal-1**:
+   - The distress audio is streamed directly to **AssemblyAI Universal-1**.
+   - **Emergency `word_boost`**: AssemblyAI applies specialized disaster vocabulary (`"rubble"`, `"collapse"`, `"unconscious"`, `"asphyxia"`, `"kidnap"`, `"hostage"`, `"décombres"`, `"blessé"`) to guarantee flawless recognition despite dust and acoustic distortion.
+   - **Whisper & Low-Decibel Audio Extraction**: Captures faint whispers from trapped or threatened victims where standard STT models fail.
+   - **Zero-Config Multi-Language Detection**: Instantly detects foreign languages (tourists/expats) and translates their distress for local rescue dispatchers.
+
+---
+
+### 🛡️ 3-Tier Fallback Hierarchy Summary:
+- **Tier 1 — Tactical Wi-Fi Bubble (Direct AssemblyAI Cloud)**: Full Universal-1 live audio transcription, LeMUR autonomous medical reasoning, and instant dispatcher synchronization.
+- **Tier 2 — Acoustic Bridge Gateway (0% Local Radio)**: On-device RS1 compression ➔ Physical Acoustic FSK ➔ Surface Rescue Gateway ➔ AssemblyAI Cloud LeMUR Triage.
+- **Tier 3 — Silent Non-Verbal Touch Beaconing**: 1-tap covert mesh and optical Morse beaconing when silence is survival or victims cannot physically speak.
 
 ---
 
