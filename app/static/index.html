@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RescueSignal AI - Resilient Offline Emergency Voice Agent</title>
-  <meta name="description" content="Emergency response platform transforming speech into resilient acoustic and optical signals during telecom blackouts with AssemblyAI.">
+  <title>RescueSignal AI - AssemblyAI-Powered Resilient Emergency Voice Agent</title>
+  <meta name="description" content="AssemblyAI Voice Agent transforming spoken distress calls into resilient acoustic (FSK), optical (Morse), and mesh emergency packets during telecom blackouts.">
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,11 +39,30 @@
   <main class="demo-container">
     <div class="demo-hero">
       <div class="hero-tag">Lablab.ai • AssemblyAI Voice Agent Hackathon</div>
-      <h1>Resilient Offline Emergency Voice Agent</h1>
+      <h1><span class="hero-highlight">AssemblyAI-Powered</span> Dual Voice & Stealth Emergency Agent</h1>
       <p>
-        When cellular networks and the Internet collapse, RescueSignal AI transforms human speech into an
-        <strong>ultracompact emergency data packet</strong> transmitted via <strong>acoustic (FSK), optical (Flash), and local mesh signals</strong>.
+        Engineered for <strong>both disaster zones and hostile threat situations</strong> (kidnappings, pursuits, hostage crises) where victims cannot speak aloud or have no time. Powered by <strong>AssemblyAI Voice Agent</strong>, it decodes spoken & whispered distress calls into structured triage intelligence—while an instant <strong>1-Tap Silent Stealth Mode</strong> generates a <strong>44-byte emergency packet</strong> broadcast via <strong>acoustic (FSK), optical strobe, and local P2P mesh</strong> with zero telecom infrastructure.
       </p>
+
+      <!-- Dual Mode Visual Banner -->
+      <div class="hero-modes-banner">
+        <div class="mode-badge-card voice-mode-card">
+          <div class="mode-badge-header">
+            <span class="mode-icon">🎙️</span>
+            <strong>Voice Distress Mode</strong>
+            <span class="badge-tag aai-tag">AssemblyAI Universal-1</span>
+          </div>
+          <p>For earthquakes, building collapses, fires & floods. Hands-free voice & whisper transcription when physical movement is blocked.</p>
+        </div>
+        <div class="mode-badge-card stealth-mode-card">
+          <div class="mode-badge-header">
+            <span class="mode-icon">🤫</span>
+            <strong>Stealth SOS Mode</strong>
+            <span class="badge-tag stealth-tag">Covert & Silent</span>
+          </div>
+          <p>For kidnappings, pursuits, active stalkers & hostage threats. 1-tap instant beaconing when making noise means danger.</p>
+        </div>
+      </div>
 
       <div class="quick-links">
         <a href="/victim" target="_blank" class="btn-secondary" title="Open victim view on another mobile device">
@@ -65,7 +84,7 @@
         </div>
 
         <div class="phone-header-info">
-          <span>VICTIM TRANSMITTER (TERMINAL A)</span>
+          <span>EMERGENCY TRANSMITTER (VOICE & STEALTH)</span>
           <div class="network-status-bar">
             <span class="net-indicator off" title="No cellular coverage">4G ❌</span>
             <span class="net-indicator off" title="No Internet access">Internet ❌</span>
@@ -78,10 +97,10 @@
           <!-- Input Mode Switcher -->
           <div class="input-mode-tabs">
             <button type="button" class="mode-tab-btn active" id="tab-btn-voice">
-              🎙️ Voice Mode
+              🎙️ Voice Mode <span style="font-size:0.68rem; opacity:0.8; font-weight:500;">(Disaster)</span>
             </button>
             <button type="button" class="mode-tab-btn" id="tab-btn-silent">
-              🤫 Silent Mode
+              🤫 Stealth Mode <span style="font-size:0.68rem; opacity:0.8; font-weight:500;">(Kidnap/Pursuit)</span>
             </button>
           </div>
 
@@ -92,7 +111,7 @@
                 <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
               </button>
               <div class="mic-label" id="mic-status-label">Push to Speak</div>
-              <div class="mic-subtext">Describe the emergency situation out loud</div>
+              <div class="mic-subtext">Speak aloud or whisper your emergency • AssemblyAI Voice Agent</div>
             </div>
 
             <!-- Scenario Presets -->
@@ -104,6 +123,9 @@
               <div class="scenario-chips">
                 <button class="chip-btn scenario-chip" data-prompt="We are three people trapped under rubble. One person is injured in the leg and another is unconscious. Urgent medical assistance needed.">
                   🏢 Building Collapse
+                </button>
+                <button class="chip-btn scenario-chip" data-prompt="Emergency! I am being followed by two armed men in a black car, pursuit in progress, urgent police help needed!">
+                  🚨 Kidnap / Pursuit
                 </button>
                 <button class="chip-btn scenario-chip" data-prompt="Fire broke out on the second floor, heavy toxic smoke, two people trapped without exit.">
                   🔥 Fire & Smoke
@@ -123,14 +145,18 @@
                 <span class="badge" style="background:rgba(239,68,68,0.2); color:#ef4444; border:1px solid #ef4444;">STEALTH</span>
               </div>
 
+              <div class="silent-mode-notice">
+                🤫 <strong>Zero-Audio Stealth:</strong> For kidnappings, pursuits & active threats when speaking would be fatal. 1-tap instant SOS.
+              </div>
+
               <!-- Situation -->
-              <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:4px;">Disaster Type:</div>
+              <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:4px;">Disaster / Threat Type:</div>
               <div class="situation-select-grid" id="silent-situation-picker">
                 <button type="button" class="situation-chip active" data-sit="BUILDING_COLLAPSE">🏢 Rubble</button>
+                <button type="button" class="situation-chip" data-sit="KIDNAPPING_THREAT">🚨 Kidnap/Threat</button>
                 <button type="button" class="situation-chip" data-sit="FIRE">🔥 Fire</button>
                 <button type="button" class="situation-chip" data-sit="FLOOD">🌊 Flood</button>
                 <button type="button" class="situation-chip" data-sit="CONFINED_SPACE">🕳️ Confined</button>
-                <button type="button" class="situation-chip" data-sit="THREAT">👤 Threat</button>
                 <button type="button" class="situation-chip" data-sit="MEDICAL">🩺 Medical</button>
               </div>
 
@@ -174,7 +200,7 @@
 
               <!-- Trigger Button -->
               <button type="button" class="btn-silent-sos" id="btn-trigger-silent-sos">
-                🚨 GENERATE & BROADCAST SILENT SOS
+                🚨 GENERATE & BROADCAST SILENT COVERT SOS (0 NOISE)
               </button>
             </div>
           </div>

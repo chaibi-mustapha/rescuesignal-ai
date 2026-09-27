@@ -38,10 +38,10 @@
   <!-- Input Mode Switcher -->
   <div class="input-mode-tabs" style="margin-bottom:1rem;">
     <button type="button" class="mode-tab-btn active" id="tab-btn-voice">
-      🎙️ Voice Mode
+      🎙️ Voice Mode <span style="font-size:0.68rem; opacity:0.8; font-weight:500;">(Disaster)</span>
     </button>
     <button type="button" class="mode-tab-btn" id="tab-btn-silent">
-      🤫 Silent Mode
+      🤫 Stealth Mode <span style="font-size:0.68rem; opacity:0.8; font-weight:500;">(Kidnap/Pursuit)</span>
     </button>
   </div>
 
@@ -52,7 +52,7 @@
         <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
       </button>
       <div class="mic-label" id="mic-status-label" style="font-size:1.1rem; margin-top:1.2rem;">Push to Speak</div>
-      <div class="mic-subtext">"Describe your emergency, people count, injuries..."</div>
+      <div class="mic-subtext">Speak aloud or whisper your emergency • AssemblyAI Voice Agent</div>
     </div>
 
     <!-- Quick Scenarios -->
@@ -63,6 +63,9 @@
       <div class="scenario-chips">
         <button class="chip-btn scenario-chip" data-prompt="We are three people trapped under rubble. One person is injured in the leg and another is unconscious. Urgent medical assistance needed.">
           🏢 Collapse
+        </button>
+        <button class="chip-btn scenario-chip" data-prompt="Emergency! I am being followed by two armed men in a black car, pursuit in progress, urgent police help needed!">
+          🚨 Kidnap / Pursuit
         </button>
         <button class="chip-btn scenario-chip" data-prompt="Fire on the 3rd floor, two people trapped by toxic smoke.">
           🔥 Fire
@@ -82,14 +85,18 @@
         <span class="badge" style="background:rgba(239,68,68,0.2); color:#ef4444; border:1px solid #ef4444;">STEALTH</span>
       </div>
 
+      <div class="silent-mode-notice">
+        🤫 <strong>Zero-Audio Stealth:</strong> For kidnappings, pursuits & active threats when speaking would be fatal. 1-tap instant SOS.
+      </div>
+
       <!-- Situation -->
-      <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:4px;">Disaster Type:</div>
+      <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:4px;">Disaster / Threat Type:</div>
       <div class="situation-select-grid" id="silent-situation-picker">
         <button type="button" class="situation-chip active" data-sit="BUILDING_COLLAPSE">🏢 Rubble</button>
+        <button type="button" class="situation-chip" data-sit="KIDNAPPING_THREAT">🚨 Kidnap/Threat</button>
         <button type="button" class="situation-chip" data-sit="FIRE">🔥 Fire</button>
         <button type="button" class="situation-chip" data-sit="FLOOD">🌊 Flood</button>
         <button type="button" class="situation-chip" data-sit="CONFINED_SPACE">🕳️ Confined</button>
-        <button type="button" class="situation-chip" data-sit="THREAT">👤 Threat</button>
         <button type="button" class="situation-chip" data-sit="MEDICAL">🩺 Medical</button>
       </div>
 
@@ -133,7 +140,7 @@
 
       <!-- Trigger Button -->
       <button type="button" class="btn-silent-sos" id="btn-trigger-silent-sos">
-        🚨 GENERATE & BROADCAST SILENT SOS
+        🚨 GENERATE & BROADCAST SILENT COVERT SOS (0 NOISE)
       </button>
     </div>
   </div>

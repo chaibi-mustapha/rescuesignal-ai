@@ -54,6 +54,8 @@ def extract_entities_locally(text: str) -> EmergencyExtraction:
         situation = "CONFINED_SPACE"
     elif any(k in t_lower for k in ["accident", "voiture", "choc", "collision", "crash", "car"]):
         situation = "TRAFFIC_ACCIDENT"
+    elif any(k in t_lower for k in ["enlèvement", "enlevement", "kidnappé", "kidnappe", "otage", "poursuite", "suivi", "menace", "agression", "arme", "kidnap", "pursuit", "stalker", "followed", "hostage", "threat", "abduction"]):
+        situation = "KIDNAPPING_THREAT"
     elif any(k in t_lower for k in ["malaise", "cardiaque", "inconscient", "étouffe", "medical", "heart"]):
         situation = "MEDICAL"
 
@@ -187,7 +189,8 @@ class AssemblyAIVoiceAgent:
                     word_boost=[
                         "décombres", "immeuble", "effondré", "inconscient", "blessé", 
                         "secours", "urgence", "victimes", "gaz", "fumée", "incendie",
-                        "inondation", "avalanche", "SOS", "rubble", "collapse", "unconscious"
+                        "inondation", "avalanche", "SOS", "rubble", "collapse", "unconscious",
+                        "kidnap", "enlèvement", "poursuite", "pursuit", "hostage", "otage", "stalker", "abduction"
                     ]
                 )
                 transcript = transcriber.transcribe(audio_file_path, config=config)

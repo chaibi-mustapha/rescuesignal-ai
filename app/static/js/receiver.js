@@ -176,9 +176,15 @@ class RescuerReceiver {
 
       <div class="checklist-group">
         <div style="font-size:0.7rem; font-weight:700; color:var(--color-cyan); text-transform:uppercase; margin-bottom:4px;">Emergency Response Protocol:</div>
-        <label class="check-item"><input type="checkbox" checked> ICU Resuscitation Unit Dispatched</label>
-        <label class="check-item"><input type="checkbox" ${payload.situation_type.includes("BUILDING") ? "checked" : ""}> Heavy Extrication & Lifting Gear En Route</label>
-        <label class="check-item"><input type="checkbox" ${payload.hazards.includes("GAS_LEAK") ? "checked" : ""}> Hazmat & Oxygen Atmospheric Sensors Ready</label>
+        ${payload.situation_type.includes("KIDNAP") || payload.situation_type.includes("THREAT") ? `
+          <label class="check-item"><input type="checkbox" checked> 🚨 Tactical Police & Hostage Rescue Dispatch Alerted</label>
+          <label class="check-item"><input type="checkbox" checked> 📡 Covert P2P Triangulation & Silent Tracking</label>
+          <label class="check-item"><input type="checkbox" checked> 🔇 Silent Tactical Unit En Route (Zero Siren/Light)</label>
+        ` : `
+          <label class="check-item"><input type="checkbox" checked> ICU Resuscitation Unit Dispatched</label>
+          <label class="check-item"><input type="checkbox" ${payload.situation_type.includes("BUILDING") ? "checked" : ""}> Heavy Extrication & Lifting Gear En Route</label>
+          <label class="check-item"><input type="checkbox" ${payload.hazards.includes("GAS_LEAK") ? "checked" : ""}> Hazmat & Oxygen Atmospheric Sensors Ready</label>
+        `}
       </div>
 
       <button class="btn-secondary" style="width:100%; margin-top:10px; justify-content:center; background:rgba(6, 182, 212, 0.15); border-color:var(--color-cyan); color:#67e8f9;" onclick="this.innerText='✅ Signal Acknowledged & Response Dispatched'">

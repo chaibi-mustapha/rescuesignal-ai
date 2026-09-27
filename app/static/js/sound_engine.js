@@ -28,14 +28,31 @@ class RescueSoundEngine {
   stopAll() {
     this.stopRequested = true;
     this.isPlaying = false;
+    if (this.currentGain && this.audioCtx) {
+      try {
+        this.currentGain.gain.cancelScheduledValues(this.audioCtx.currentTime);
+        this.currentGain.gain.setValueAtTime(0, this.audioCtx.currentTime);
+      } catch (e) {}
+    }
+    if (this.currentOscillator) {
+      try {
+        this.currentOscillator.stop();
+        this.currentOscillator.disconnect();
+      } catch (e) {}
+      this.currentOscillator = null;
+    }
+    this.currentGain = null;
   }
 
   /** Play single calibrated tone */
   playTone(frequency = 800, durationMs = 120, type = 'sine') {
+    if (this.stopRequested) return Promise.resolve();
     this.init();
     return new Promise((resolve) => {
       const osc = this.audioCtx.createOscillator();
       const gain = this.audioCtx.createGain();
+      this.currentOscillator = osc;
+      this.currentGain = gain;
 
       osc.type = type;
       osc.frequency.setValueAtTime(frequency, this.audioCtx.currentTime);
@@ -54,7 +71,22 @@ class RescueSoundEngine {
       osc.start(now);
       osc.stop(now + (durationMs / 1000));
 
-      setTimeout(resolve, durationMs);
+      const timer = setTimeout(() => {
+        if (this.currentOscillator === osc) this.currentOscillator = null;
+        if (this.currentGain === gain) this.currentGain = null;
+        resolve();
+      }, durationMs);
+
+      if (this.stopRequested) {
+        clearTimeout(timer);
+        try {
+          osc.stop();
+          osc.disconnect();
+        } catch (e) {}
+        this.currentOscillator = null;
+        this.currentGain = null;
+        resolve();
+      }
     });
   }
 
@@ -121,7 +153,7 @@ class RescueSoundEngine {
     }
 
     this.isPlaying = false;
-    if (onProgress) onProgress(bitStream.length, bitStream.length, 'DONE');
+    if (onProgress && !this.stopRequested) onProgress(bitStream.length, bitStream.length, 'DONE');
   }
 
   /** Plays rescue alert chime when a critical packet is received */
@@ -133,7 +165,21 @@ class RescueSoundEngine {
   }
 
   sleep(ms) {
-    return new Promise(res => setTimeout(res, ms));
+    return new Promise(res => {
+      if (this.stopRequested) {
+        res();
+        return;
+      }
+      const interval = 20;
+      let elapsed = 0;
+      const timer = setInterval(() => {
+        elapsed += interval;
+        if (this.stopRequested || elapsed >= ms) {
+          clearInterval(timer);
+          res();
+        }
+      }, interval);
+    });
   }
 
   /** Attach live visualizer to a Canvas element */
