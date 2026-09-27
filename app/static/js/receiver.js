@@ -105,7 +105,8 @@ class RescuerReceiver {
     this.connectWebSocket();
     this.setupVisualizer();
     this.setupMicListener();
-    // Pre-populate with initial demonstration: 1 call initially (or wait for simulation)
+    // Pre-populate with the 3 victim calls so they are immediately available on load
+    this.activeCalls = JSON.parse(JSON.stringify(PREDEFINED_VICTIM_CALLS));
     this.renderQueue();
   }
 
@@ -541,7 +542,7 @@ class RescuerReceiver {
       if (call.audioUrl) {
         audioPlayerHtml = `
           <div class="victim-audio-bar">
-            <button type="button" class="btn-listen-victim" data-audio="${call.audioUrl}">
+            <button type="button" class="btn-listen-victim" data-call-id="${call.id}" data-audio="${call.audioUrl}">
               <span>▶ 🎙️ Listen to Victim Call</span>
             </button>
             <span class="victim-audio-label">"${call.rawTranscript}"</span>
