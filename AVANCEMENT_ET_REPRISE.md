@@ -3,36 +3,37 @@
 > **Dernière mise à jour** : 27 septembre 2026  
 > **Concours** : AssemblyAI Voice Agent Hackathon sur [lablab.ai](https://lablab.ai/ai-hackathons/assemblyai-voice-agent-hackathon)  
 > **Statut global** : 🟢 **100% TERMINÉ, VALIDÉ, COMMITTÉ & SYNCHRONISÉ SUR GITHUB**  
-> **Dépôt GitHub** : [https://github.com/chaibi-mustapha/rescuesignal-ai](https://github.com/chaibi-mustapha/rescuesignal-ai) (Commit `7931c0e`)  
+> **Dépôt GitHub** : [https://github.com/chaibi-mustapha/rescuesignal-ai](https://github.com/chaibi-mustapha/rescuesignal-ai) (Commit `8a89359`)  
 > **Application Live HTTPS** : [https://rescuesignal-ai.onrender.com](https://rescuesignal-ai.onrender.com)  
 
 ---
 
 ## 🆕 Récapitulatif des Dernières Améliorations Apportées
 
-1. **Arrêt immédiat des signaux optiques et acoustiques** :
-   - Les émissions optiques (stroboscope Morse) et acoustiques (modem FSK) s'interrompent instantanément dès qu'on change d'onglet (onglets internes Mode Vocal / Mode Furtif ou changement d'onglet dans le navigateur via `visibilitychange`/`blur`).
-   - Clic interactif d'interruption : les boutons affichent `🛑 Stop Optical Strobe` et `🛑 Stop Acoustic Signal (X%)` avec une animation pulsante rouge pour couper le signal immédiatement au clic.
-   - Moteur Web Audio mis à niveau avec coupure immédiate des oscillateurs (`stopAll()`) et temporisation annulable par pas de 20ms.
+1. **Centrale d'Appel de Crise 911 / 112 & Triage Dynamique Multi-Victimes** :
+   - Mise en place d'un véritable **AI Crisis Dispatcher** sur le Terminal B (Station Rescuer).
+   - Dépassement salutaire de la file d'attente chronologique classique (*First In, First Out*) : réordonnancement instantané et dynamique par criticité vitale absolue.
+   - Bannière d'alerte animée `⚡ DYNAMIC TRIAGE OVERRIDE` dès qu'un appel d'urgence vitale critique (P1) est détecté pour le propulser en tête de file (#1 HIGHEST PRIORITY).
+   - Bouton de simulation 1-clic `⚡ Simulate 3 Incoming Victim Calls` injectant les 3 appels de manière asynchrone pour prouver le retri automatique.
 
-2. **Mise en avant du rôle central d'AssemblyAI** :
-   - Titre principal Hero : `<span class="hero-highlight">AssemblyAI-Powered</span> Dual Voice & Stealth Emergency Agent`.
-   - Explication explicite du rôle du modèle Universal-1 (`SpeechModel.best`) et de l'agent de triage LeMUR.
+2. **3 Appels / Cas Victimes Complets avec Audios Réalistes** :
+   - **Appel 1 (🔴 P1 - CRITICAL — Décombres & Inconscient)** :
+     - *Audio généré* : [`/static/audio/victim_1_rubble.mp3`](file:///d:/0%200%20Concours%20Encours%20et%20List%20des%20Projets/Concours%20En%20Cours/Lablab%20-%20AssemblyAI%20%20Voice%20Agent%20Hackathon/Projet/app/static/audio/victim_1_rubble.mp3) (Voix de femme essoufflée sous les gravats : *"Help! Can anyone hear me?! Trapped under concrete rubble... Sarah is unconscious!"*).
+     - *Protocole secours* : SMUR Réanimation ICU #04 + Désincarcération lourde et pinces hydrauliques.
+   - **Appel 2 (🚨 P1 - TACTICAL — Prise d'otage & Menace Armée)** :
+     - *Audio généré* : [`/static/audio/victim_2_whisper_threat.mp3`](file:///d:/0%200%20Concours%20Encours%20et%20List%20des%20Projets/Concours%20En%20Cours/Lablab%20-%20AssemblyAI%20%20Voice%20Agent%20Hackathon/Projet/app/static/audio/victim_2_whisper_threat.mp3) (Voix chuchotée à bas volume : *"Armed intruder on 3rd floor. Hostage threat, suspect armed. 2 people hiding... Send tactical police, do not make noise."*).
+     - *Protocole secours* : Unité tactique SWAT / GIGN + Triangulation silencieuse P2P + Approche zéro sirène.
+   - **Appel 3 (🛗 P2 - URGENT — Ascenseur Bloqué)** :
+     - *Audio généré* : [`/static/audio/victim_3_elevator.mp3`](file:///d:/0%200%20Concours%20Encours%20et%20List%20des%20Projets/Concours%20En%20Cours/Lablab%20-%20AssemblyAI%20%20Voice%20Agent%20Hackathon/Projet/app/static/audio/victim_3_elevator.mp3) (Voix calme mais préoccupée : *"Elevator stalled between floor 4 and 5 after tremors. 4 people trapped, conscious and stable."*).
+     - *Protocole secours* : Équipe treuil et sauvetage en puits + Bilan asthme / panique.
 
-3. **Intégration du paradigme Enlèvements, Poursuites & Menaces (Silence = Survie)** :
-   - Prise en charge des situations critiques où les victimes ne peuvent pas parler à voix haute et n'ont pas de temps à perdre.
-   - **Mode Vocal** : reconnaissance des voix chuchotées de faible amplitude via AssemblyAI et `word_boost` sécuritaire (`"kidnap"`, `"pursuit"`, `"hostage"`, `"stalker"`, etc.).
-   - **Mode Furtif 1-Tap** : sélection immédiate de la menace `🚨 Kidnap/Threat` et émission discrète du paquet RS1 (`SEC`) sans faire aucun bruit.
-   - **Station Rescuer adaptée** : protocole de réponse automatique avec alerte tactique police/GIGN/SWAT, triangulation P2P discrète et approche sans sirène.
+3. **Lecteur Audio Intégré & Dispatch Interactif 1-Clic** :
+   - Chaque carte d'intervention dispose d'un lecteur interactif `▶ 🎙️ Listen to Victim Call` permettant à l'opérateur 911 d'écouter la voix réelle de la victime.
+   - Bouton de déploiement `🚨 Confirm & Dispatch Emergency Units` qui bascule en `🚑 Response Units En Route (ETA: 4 min)` et valide automatiquement la checklist d'intervention.
 
-4. **Interface enrichie** :
-   - Cartes visuelles de présentation Dual-Mode dans la section Hero.
-   - Nouveau scénario prédéfini 1-clic : `🚨 Kidnap / Pursuit`.
-   - Bandeaux d'avertissement tactiques et onglets clarifiés `(Disaster)` / `(Kidnap/Pursuit)`.
+4. **Arrêt immédiat des signaux optiques et acoustiques** :
+   - Les émissions optiques (stroboscope Morse) et acoustiques (modem FSK) s'interrompent instantanément dès qu'on change d'onglet ou qu'on clique sur `🛑 Stop`.
 
----
-
-## 📋 Textes de Soumission Mis à Jour pour Lablab.ai
 
 ### A. Titre du Projet
 ```text
