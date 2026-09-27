@@ -80,19 +80,42 @@ We deeply integrated AssemblyAI into our core architecture:
 
 ---
 
+## 🎬 Prochaine Étape : Vidéo V3 avec Voix Réelle de Victime en Détresse & Décodage AssemblyAI en Direct
+
+### 💡 Objectif et Spécifications Validés
+Lors de la prochaine itération de la vidéo, nous allons intégrer un **vrai extrait vocal dramatique d'une personne en détresse réelle (cris, essoufflements, panique)** pour une immersion totale :
+
+1. **Clip Audio Réaliste de Victime** :
+   - Voix d'une personne piégée sous les décombres ou en situation d'enlèvement, avec une voix brisée, essoufflée, criant à l'aide :
+     > *"Help! Can anyone hear me?! We're trapped under the concrete rubble... one person's leg is broken, and Sarah is unconscious! Please send medical help, we can barely breathe!"*
+2. **Action en Direct dans l'Application** :
+   - Dans la Scène 2, le curseur clique sur le microphone.
+   - Le flux audio de la victime retentit dans la vidéo (onde sonore active).
+   - AssemblyAI Universal-1 transcrit en direct cet appel à chaud malgré les cris, les sanglots et les bruits parasites.
+   - Le spectateur voit le texte se matérialiser en temps réel dans l'interface.
+3. **Synchronisation avec la Narration** :
+   - Le narrateur explique ensuite la prouesse technique : AssemblyAI extrait fidèlement chaque terme vital grâce au modèle Universal-1 et au `word_boost` d'urgence.
+4. **Respect Strict du Format** :
+   - Format Full HD 1080p 60 FPS, plein écran, accéléré GPU.
+   - Durée totale conservée entre 2m 40s et 2m 45s (strictement inférieure à 3 minutes).
+
+---
+
 ## 🔄 Guide Rapide de Reprise
 
 Quand vous souhaiterez reprendre le travail :
-1. **Tester en local** :
+1. **Lancer le serveur en local** :
    ```bash
    cd "Projet"
    python run.py
    ```
    Ouvrir [http://localhost:8000/](http://localhost:8000/).
-2. **Tester les deux modes** :
-   - Tester le **Mode Vocal** : clic sur le scénario `🚨 Kidnap / Pursuit` ou `🏢 Building Collapse`.
-   - Tester le **Mode Furtif** : passer sur `🤫 Stealth Mode`, choisir `🚨 Kidnap/Threat`, cliquer sur le bouton SOS silencieux.
-   - Tester l'**arrêt des signaux** : lancer le signal optique ou acoustique, changer d'onglet ou cliquer sur un bouton pour vérifier l'interruption instantanée.
+2. **Générer la vidéo V3 avec voix de victime en détresse** :
+   ```bash
+   cd "Video et Naration Automation pour chaque concours"
+   python generate_rescuesignal_video.py
+   ```
 3. **Soumettre sur Lablab.ai** :
-   - Tous les textes de la section ci-dessus sont prêts à être copiés-collés dans le formulaire de soumission.
+   - Tous les textes de la section 3 sont prêts à être copiés-collés dans le formulaire de soumission.
+
 
