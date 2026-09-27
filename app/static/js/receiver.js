@@ -23,12 +23,12 @@ const PREDEFINED_VICTIM_CALLS = [
     badgeClass: "p1",
     audioUrl: "/static/audio/victim_1_rubble.mp3",
     protocolChecklist: [
-      "ICU Resuscitation Unit Dispatched (SMUR #04)",
-      "Heavy Extrication & Hydraulic Jaws En Route",
+      "ICU Resuscitation Unit Dispatched (Trauma ICU #04)",
+      "Heavy Extrication & Hydraulic Jaws Dispatched",
       "Atmospheric Oxygen & Dust Airway Sensors Ready"
     ],
     status: "DISPATCH PENDING",
-    unitsAssigned: "SMUR ICU #04 + Fire Dept Extrication #12",
+    unitsAssigned: "Trauma ICU #04 + Fire Dept Extrication #12",
     signalQuality: 92,
     timestamp: Date.now() - 45000
   },
@@ -52,7 +52,7 @@ const PREDEFINED_VICTIM_CALLS = [
     protocolChecklist: [
       "Tactical Police SWAT / Special Intervention Alerted",
       "Covert P2P Mesh Triangulation & Silent Tracking",
-      "Silent Tactical Unit En Route (Zero Siren / Zero Lights)"
+      "Silent Tactical Unit Dispatched (Zero Siren / Zero Lights)"
     ],
     status: "DISPATCH PENDING",
     unitsAssigned: "Tactical Police SWAT Unit #9 + Silent Drone Recon",
@@ -332,14 +332,14 @@ class RescuerReceiver {
       protocolChecklist: isThreat ? [
         "Tactical Police SWAT / Hostage Rescue Alerted",
         "Covert P2P Mesh Triangulation & Silent Tracking",
-        "Silent Tactical Unit En Route (Zero Siren/Light)"
+        "Silent Tactical Unit Dispatched (Zero Siren / Zero Lights)"
       ] : [
         "ICU Resuscitation Unit Dispatched",
-        "Heavy Extrication & Hydraulic Gear En Route",
+        "Heavy Extrication & Hydraulic Gear Dispatched",
         "Atmospheric Oxygen & Dust Airway Sensors Ready"
       ],
       status: "DISPATCH PENDING",
-      unitsAssigned: isThreat ? "Tactical Police SWAT #9" : "SMUR ICU #04 + Extrication #12",
+      unitsAssigned: isThreat ? "Tactical Police SWAT #9" : "Mobile Trauma ICU #04 + Extrication #12",
       signalQuality: snr,
       timestamp: Date.now()
     };
@@ -486,7 +486,7 @@ class RescuerReceiver {
 
     call.status = "DISPATCHED";
     btnElement.classList.add("dispatched");
-    btnElement.innerHTML = `<span>🚑 Response Units En Route (ETA: 4 min)</span>`;
+    btnElement.innerHTML = `<span>🚑 Response Units Dispatched (ETA: 4 min)</span>`;
     btnElement.disabled = true;
 
     // Check all protocol checkboxes in this card
@@ -596,7 +596,7 @@ class RescuerReceiver {
         </div>
 
         <button type="button" class="btn-dispatch-units ${call.status === "DISPATCHED" ? "dispatched" : ""}" data-dispatch-id="${call.id}" ${call.status === "DISPATCHED" ? "disabled" : ""}>
-          ${call.status === "DISPATCHED" ? "🚑 Response Units En Route (ETA: 4 min)" : "🚨 Confirm & Dispatch Emergency Units"}
+          ${call.status === "DISPATCHED" ? "🚑 Response Units Dispatched (ETA: 4 min)" : "🚨 Confirm & Dispatch Emergency Units"}
         </button>
       `;
 

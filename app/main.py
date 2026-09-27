@@ -100,7 +100,7 @@ async def process_voice_text(request: TranscribeRequest):
     Processes transcribed speech or manual prompt through the Voice Agent pipeline.
     """
     try:
-        text = request.text or "SOS trois personnes sous les décombres une blessée aide médicale requise"
+        text = request.text or "SOS three people trapped under rubble one injured urgent medical assistance needed"
         packet = AssemblyAIVoiceAgent.process_voice_call(manual_text=text)
         morse = text_to_morse(packet.compact_string)
         

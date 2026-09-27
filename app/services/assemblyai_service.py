@@ -204,7 +204,7 @@ class AssemblyAIVoiceAgent:
 
         # Fallback simulation message if no cloud key or network fail
         logger.info("Using simulated emergency voice transcription fallback.")
-        return "Nous sommes trois personnes coincées sous les décombres. Une personne est blessée à la jambe et une autre est inconsciente. Besoin d'aide médicale urgente."
+        return "We are three people trapped under rubble. One person is injured in the leg and another is unconscious. Urgent medical assistance needed."
 
     @classmethod
     def analyze_with_lemur(cls, transcript_text: str) -> EmergencyExtraction:
