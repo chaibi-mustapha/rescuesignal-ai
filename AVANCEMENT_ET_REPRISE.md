@@ -80,24 +80,32 @@ We deeply integrated AssemblyAI into our core architecture:
 
 ---
 
-## 🎬 Prochaine Étape : Vidéo V3 avec Voix Réelle de Victime en Détresse & Décodage AssemblyAI en Direct
+## 🎬 Prochaine Étape : Vidéo V3 & Centrale de Secours Triage Multi-Victimes (911/112 Crisis Dispatcher)
 
-### 💡 Objectif et Spécifications Validés
-Lors de la prochaine itération de la vidéo, nous allons intégrer un **vrai extrait vocal dramatique d'une personne en détresse réelle (cris, essoufflements, panique)** pour une immersion totale :
+### 💡 Objectifs et Spécifications Validés
 
-1. **Clip Audio Réaliste de Victime** :
-   - Voix d'une personne piégée sous les décombres ou en situation d'enlèvement, avec une voix brisée, essoufflée, criant à l'aide :
-     > *"Help! Can anyone hear me?! We're trapped under the concrete rubble... one person's leg is broken, and Sarah is unconscious! Please send medical help, we can barely breathe!"*
-2. **Action en Direct dans l'Application** :
-   - Dans la Scène 2, le curseur clique sur le microphone.
-   - Le flux audio de la victime retentit dans la vidéo (onde sonore active).
-   - AssemblyAI Universal-1 transcrit en direct cet appel à chaud malgré les cris, les sanglots et les bruits parasites.
-   - Le spectateur voit le texte se matérialiser en temps réel dans l'interface.
-3. **Synchronisation avec la Narration** :
-   - Le narrateur explique ensuite la prouesse technique : AssemblyAI extrait fidèlement chaque terme vital grâce au modèle Universal-1 et au `word_boost` d'urgence.
-4. **Respect Strict du Format** :
-   - Format Full HD 1080p 60 FPS, plein écran, accéléré GPU.
-   - Durée totale conservée entre 2m 40s et 2m 45s (strictement inférieure à 3 minutes).
+#### 1. Rôle de Centrale d'Appel de Crise & Triage Dynamique Multi-Victimes
+- **Le constat** : En catastrophe majeure, les secours reçoivent des dizaines d'appels simultanés. Le modèle chronologique (*First In, First Out*) est mortel.
+- **La solution démontrée dans RescueSignal AI** : Notre console **Rescuer Station** agit comme une **centrale de régulation d'urgence intelligente (AI Crisis Dispatcher)** :
+  - Même si 10 victimes émettent en même temps (sous les décombres ou en détresse urbaine), le décodeur et l'agent sémantique AssemblyAI analysent l'urgence et **réorganisent la liste en temps réel par gravité vitale absolue** :
+    - `🔴 P1 - CRITICAL` (Priorité absolue : Inconscient, asphyxie, hémorragie, enlèvement/menace immédiate).
+    - `🟠 P2 - URGENT` (Priorité secondaire : Fractures, personnes bloquées stables).
+    - `🟡 P3 - MODERATE` (Dégâts matériels, indemnes).
+  - Le régulateur voit immédiatement **qui secourir en premier** avec la checklist d'intervention pré-remplie (SMUR réanimation, désincarcération lourde, unité tactique police).
+
+#### 2. Voix Réelle de Victime en Détresse (Cris, Halètements & Panique)
+- **Extrait vocal dramatique** : Une personne piégée sous les décombres appelant à l'aide d'une voix brisée et essoufflée :
+  > *"Help! Can anyone hear me?! We're trapped under concrete rubble... one person's leg is broken, and Sarah is unconscious! Please send medical help, we can barely breathe!"*
+- **Action en Direct dans l'App (Scène 2)** :
+  - Clic sur le microphone, retentissement du cri de détresse de la victime.
+  - AssemblyAI Universal-1 transcrit en temps réel malgré les sanglots, les bruits de gravats et la distorsion.
+  - Apparition immédiate de l'alerte en tête de file dans la console de secours (`P1 - CRITICAL`).
+- **Synchronisation avec la Narration** :
+  - Le narrateur met en valeur la prouesse d'AssemblyAI : reconnaissance phonétique robuste et `word_boost` d'urgence.
+
+#### 3. Spécifications Techniques Vidéo
+- Format Full HD 1080p, 60 FPS constants accélérés GPU, widescreen plein écran.
+- Durée totale calibrée entre 2m 40s et 2m 45s (strictement inférieure à 3 minutes).
 
 ---
 
@@ -110,12 +118,13 @@ Quand vous souhaiterez reprendre le travail :
    python run.py
    ```
    Ouvrir [http://localhost:8000/](http://localhost:8000/).
-2. **Générer la vidéo V3 avec voix de victime en détresse** :
+2. **Générer la vidéo V3 avec voix de victime en détresse & triage centrale** :
    ```bash
    cd "Video et Naration Automation pour chaque concours"
    python generate_rescuesignal_video.py
    ```
 3. **Soumettre sur Lablab.ai** :
    - Tous les textes de la section 3 sont prêts à être copiés-collés dans le formulaire de soumission.
+
 
 
