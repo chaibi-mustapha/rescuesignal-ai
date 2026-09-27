@@ -20,8 +20,8 @@ class VictimTransmitter {
   init() {
     this.setupEventListeners();
     this.initBatteryIndicator();
-    // Default initial demonstration packet in English
-    this.loadScenarioText("We are three people trapped under rubble. One person is injured in the leg and another is unconscious. Urgent medical assistance needed.");
+    // Default initial demonstration packet in English (Call 1: Trapped under concrete rubble)
+    this.loadScenarioText("Help! Can anyone hear me?! We're trapped under concrete rubble in sector 4! One person has a broken leg, and Sarah is unconscious! Please send medical help, we can barely breathe!");
   }
 
   initBatteryIndicator() {
