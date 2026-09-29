@@ -20,3 +20,6 @@ venv.bak/
 Thumbs.db
 .vscode/
 .idea/
+
+# Internal documentation
+AVANCEMENT_ET_REPRISE.md
