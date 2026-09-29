@@ -192,7 +192,7 @@ class AssemblyAIVoiceAgent:
                 try:
                     config = aai.TranscriptionConfig(
                         language_detection=True,
-                        speech_model=aai.SpeechModel.best,
+                        speech_models=["universal-3-5-pro", "universal-2"],
                         word_boost=word_boost_terms
                     )
                 except Exception:
