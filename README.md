@@ -32,6 +32,19 @@ Whether trapped beneath earthquake rubble or facing a kidnapping, stalker pursui
 
 ---
 
+## 📸 Platform Visual Overview
+
+<p align="center">
+  <img src="docs/screenshots/01%20RescueSignal%20AI%20Platform%20Overview.png" width="100%" alt="RescueSignal AI Dual Platform Overview" />
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/04%20Rescue%20Station%20Real-Time%20Triage.png" width="49%" alt="Rescue Station 911 Triage Console" />
+  <img src="docs/screenshots/05%20Stealth%20Silent%20Emergency%20Input.png" width="49%" alt="Stealth Silent Mode Interface" />
+</p>
+
+---
+
 ## 🏆 Alignment with the AssemblyAI Voice Agent Hackathon
 
 ### 💡 Why AssemblyAI is Indispensable: The Core Engine
@@ -261,9 +274,9 @@ RescueSignal AI's **Rescue Station (Terminal B)** operates as an **Autonomous AI
 
 | Deliverable | Description / Location |
 | :--- | :--- |
-| **📄 Presentation Deck** | [`RescueSignal_AI_Pitch_Deck.pdf`](../video/RescueSignal_AI_Pitch_Deck.pdf) *(1920×1080 16:9 Landscape, 6 Slides)* |
-| **🎥 Master Video (English)** | [`video/rescuesignal_ai_live_demo_hd.mp4`](../video/rescuesignal_ai_live_demo_hd.mp4) *(Full HD 1080p 60 FPS, 2m 56s)* |
-| **🎥 Master Video (French)** | [`video/rescuesignal_ai_live_demo_hd_fr.mp4`](../video/rescuesignal_ai_live_demo_hd_fr.mp4) *(Full HD 1080p 60 FPS, 2m 50s)* |
+| **📄 Presentation Deck** | [**`RescueSignal_AI_Pitch_Deck.pdf`**](docs/RescueSignal_AI_Pitch_Deck.pdf) *(1920×1080 16:9 Landscape, 6 High-Impact Slides)* |
+| **🎥 Master Video (English)** | [**`rescuesignal_ai_live_demo_hd.mp4`**](https://github.com/chaibi-mustapha/rescuesignal-ai) *(Full HD 1080p 60 FPS, 2m 56s)* |
+| **🎥 Master Video (French)** | [**`rescuesignal_ai_live_demo_hd_fr.mp4`**](https://github.com/chaibi-mustapha/rescuesignal-ai) *(Full HD 1080p 60 FPS, 2m 50s)* |
 | **🌐 Cloud Deployment** | [https://rescuesignal-ai.onrender.com](https://rescuesignal-ai.onrender.com) *(Always Live on Render)* |
 | **💻 GitHub Source** | [https://github.com/chaibi-mustapha/rescuesignal-ai](https://github.com/chaibi-mustapha/rescuesignal-ai) |
 
