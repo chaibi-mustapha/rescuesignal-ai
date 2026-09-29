@@ -110,22 +110,40 @@ We deeply integrated AssemblyAI into our core architecture:
 
 ---
 
-## 🔄 Guide Rapide de Reprise
+## 🎬 État des Vidéos HD & Synchronisation du Clignateur Stroboscopique
 
-Quand vous souhaiterez reprendre le travail :
-1. **Lancer le serveur en local** :
-   ```bash
-   cd "Projet"
-   python run.py
-   ```
-   Ouvrir [http://localhost:8000/](http://localhost:8000/).
-2. **Générer la vidéo V3 avec voix de victime en détresse & triage centrale** :
-   ```bash
-   cd "Video et Naration Automation pour chaque concours"
-   python generate_rescuesignal_video.py
-   ```
-3. **Soumettre sur Lablab.ai** :
-   - Tous les textes de la section 3 sont prêts à être copiés-collés dans le formulaire de soumission.
+### 1. Améliorations Récentes Validées
+- **Suppression intégrale des secondes blanches au début** : Rognage frame-accurate au pixel et millième de seconde via filtre FFmpeg (`trim=start=...[vtrim]; [vtrim]setpts=PTS-STARTPTS`). Les vidéos démarrent instantanément sur le thème sombre de RescueSignal AI à $0.0\,\text{s}$.
+- **Défilement caméra automatique (Scène 4)** : La caméra effectue un scroll fluide vers le bas (`window.__smoothScrollWindow(440, 700)`) pour révéler au premier plan les canaux d'émission : bouton acoustique FSK et clignateur optique Morse.
+- **Remontée fluide (Scène 5)** : L'affichage remonte (`window.__smoothScrollWindow(0, 600)`) pour accéder sans encombre aux commandes tactiles du Mode Furtif.
+
+### 2. 📝 Remarque Utilisateur Enregistrée pour la Reprise : Flashs Stroboscopiques Multiples (3 à 4 Flashs)
+- **Constat & Demande** : Dans la version précédente de la vidéo anglaise, un seul flash était visible. Lors du clic sur le clignateur (Stroboscope optique Morse), il doit y avoir **3 à 4 flashs stroboscopiques successifs, puissants et bien distincts** sur l'écran.
+- **Modifications appliquées et validées dans le code** :
+  1. [`app/static/js/transmitter.js`](file:///d:/0%200%20Concours%20Encours%20et%20List%20des%20Projets/Concours%20En%20Cours/Lablab%20-%20AssemblyAI%20%20Voice%20Agent%20Hackathon/Projet/app/static/js/transmitter.js) :
+     - Éclat overlay augmenté à `rgba(255, 255, 255, 0.90)` plein écran (`z-index: 999999`).
+     - Cadence des flashs calibrée à 170ms ON / 140ms OFF par salve de **4 flashs nets et distincts** (durée ~1.24s).
+     - Luminosité du bouton rehaussée (`brightness(2.4)`) et badge enrichi `... --- ... [4× STROBE]`.
+  2. Scripts d'automatisation vidéo ([`generate_rescuesignal_video.py`](file:///d:/0%200%20Concours%20Encours%20et%20List%20des%20Projets/Concours%20En%20Cours/Lablab%20-%20AssemblyAI%20%20Voice%20Agent%20Hackathon/Video%20et%20Naration%20Automation%20pour%20chaque%20concours/generate_rescuesignal_video.py) et [`generate_rescuesignal_video_fr.py`](file:///d:/0%200%20Concours%20Encours%20et%20List%20des%20Projets/Concours%20En%20Cours/Lablab%20-%20AssemblyAI%20%20Voice%20Agent%20Hackathon/Video%20et%20Naration%20Automation%20pour%20chaque%20concours/generate_rescuesignal_video_fr.py)) :
+     - Fenêtre d'activation étendue (1.84s en anglais, 2.2s en français) pour laisser la salve de 3 à 4 flashs complets s'afficher sans coupure prématurée.
+     - Scroll automatique vers le bas (`window.__smoothScrollWindow(440, 700)`) pour avoir le bouton et l'overlay en plein champ.
+
+---
+
+## 🎬 État des Vidéos Master HD (Validées & Finalisées le 29 septembre 2026)
+
+| Vidéo | Fichier | Résolution / FPS | Durée | Poids | Statut |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **English Master HD** | [`video/rescuesignal_ai_live_demo_hd.mp4`](../video/rescuesignal_ai_live_demo_hd.mp4) | 1920×1080 (60 FPS) | **2m 56s** (176.37s) | 29.48 MB | 🟢 Prêt pour soumission |
+| **French Master HD** | [`video/rescuesignal_ai_live_demo_hd_fr.mp4`](../video/rescuesignal_ai_live_demo_hd_fr.mp4) | 1920×1080 (60 FPS) | **2m 50s** (169.87s) | 25.25 MB | 🟢 Prêt pour soumission |
+
+### Points Validés dans les Nouvelles Versions :
+1. **4 flashs stroboscopiques optiques nets et distincts** lors du déclenchement du clignateur Morse (170ms ON / 140ms OFF, overlay à 90%, badge amber vif).
+2. **Défilement automatique caméra** vers les canaux physiques (acoustique & optique) puis remontée fluide vers les boutons du Mode Furtif.
+3. **Zéro seconde blanche au début** (démarrage direct à $0.0\,\text{s}$ sur l'interface sombre).
+4. **Durée totale strictement calibrée < 3 minutes**.
+
+
 
 
 

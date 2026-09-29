@@ -143,14 +143,6 @@ class VictimTransmitter {
       }
     });
 
-    window.addEventListener("pagehide", () => {
-      this.stopAllTransmissions();
-    });
-
-    window.addEventListener("blur", () => {
-      this.stopAllTransmissions();
-    });
-
     // Global click listener: if any other button, tab, chip, or link is clicked while transmitting, stop!
     document.addEventListener("click", (e) => {
       if (!this.isOpticalTransmitting && !this.isAcousticTransmitting) return;
@@ -431,8 +423,10 @@ class VictimTransmitter {
   }
 
   async transmitOptical() {
+    console.log("[Transmitter] transmitOptical() called at " + Date.now() + ", isOpticalTransmitting =", this.isOpticalTransmitting);
     // If optical transmission is already running, toggle/stop it
     if (this.isOpticalTransmitting) {
+      console.log("[Transmitter] Calling stopOptical from toggle at " + Date.now());
       this.stopOptical();
       return;
     }
@@ -442,20 +436,30 @@ class VictimTransmitter {
       this.stopAcoustic();
     }
 
-    if (!this.currentMorse) return;
+    const morsePattern = this.currentMorse || "... --- ...";
     const btn = document.getElementById("btn-tx-optical");
     const overlay = document.getElementById("optical-strobe-overlay");
-    if (!overlay) return;
+    const beacon = document.getElementById("optical-beacon-badge");
+    const pulseCode = document.getElementById("morse-pulse-code");
 
     this.isOpticalTransmitting = true;
 
     if (btn) {
       btn.innerHTML = `<span>🛑 Stop Optical Strobe</span>`;
       btn.classList.add("active-transmitting");
+      btn.classList.add("optical-strobe-active");
       btn.disabled = false;
     }
 
-    overlay.style.display = "block";
+    if (beacon) {
+      beacon.style.display = "flex";
+      if (pulseCode) pulseCode.innerText = morsePattern + " [4× STROBE]";
+    }
+
+    if (overlay) {
+      overlay.style.background = "transparent";
+      overlay.style.display = "block";
+    }
 
     const abortableSleep = (ms) => {
       return new Promise((resolve) => {
@@ -476,26 +480,21 @@ class VictimTransmitter {
     };
 
     try {
-      // Optical Morse pulse timing
-      const tokens = this.currentMorse.split(" ");
-      for (const token of tokens.slice(0, 15)) {
-        if (!this.isOpticalTransmitting) break;
-        for (const char of token) {
+      // Optical Strobe: 4 high-intensity, crisp stroboscopic flashes per burst (3 à 4 flashs distincts)
+      while (this.isOpticalTransmitting) {
+        for (let flashIdx = 0; flashIdx < 4; flashIdx++) {
           if (!this.isOpticalTransmitting) break;
-          if (char === '.') {
-            overlay.style.background = "#ffffff";
-            await abortableSleep(80);
-            overlay.style.background = "transparent";
-            await abortableSleep(80);
-          } else if (char === '-') {
-            overlay.style.background = "#ffffff";
-            await abortableSleep(240);
-            overlay.style.background = "transparent";
-            await abortableSleep(80);
-          }
+          const onMs = 170;   // Bright, prominent strobe pulse
+          const offMs = 140;  // Distinct dark interval between flashes
+          if (overlay) overlay.style.background = "rgba(255, 255, 255, 0.90)";
+          if (btn) btn.style.filter = "brightness(2.4)";
+          await abortableSleep(onMs);
+          if (overlay) overlay.style.background = "transparent";
+          if (btn) btn.style.filter = "brightness(1.0)";
+          await abortableSleep(offMs);
         }
         if (!this.isOpticalTransmitting) break;
-        await abortableSleep(200);
+        await abortableSleep(250); // Pause between 4-flash bursts
       }
     } finally {
       this.stopOptical();
@@ -503,16 +502,23 @@ class VictimTransmitter {
   }
 
   stopOptical() {
+    console.log("[Transmitter] stopOptical() called by stack:\n" + (new Error().stack));
     this.isOpticalTransmitting = false;
     const overlay = document.getElementById("optical-strobe-overlay");
     if (overlay) {
       overlay.style.display = "none";
       overlay.style.background = "transparent";
     }
+    const beacon = document.getElementById("optical-beacon-badge");
+    if (beacon) {
+      beacon.style.display = "none";
+    }
     const btn = document.getElementById("btn-tx-optical");
     if (btn) {
       btn.innerHTML = this.origOpticalHtml || `💡 Broadcast Optical Strobe (Morse)`;
       btn.classList.remove("active-transmitting");
+      btn.classList.remove("optical-strobe-active");
+      btn.style.filter = "";
       btn.disabled = false;
     }
   }

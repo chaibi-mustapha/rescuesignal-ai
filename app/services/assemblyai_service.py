@@ -182,17 +182,24 @@ class AssemblyAIVoiceAgent:
         if HAS_ASSEMBLYAI:
             try:
                 logger.info(f"Submitting audio to AssemblyAI: {audio_file_path}")
+                word_boost_terms = [
+                    "décombres", "immeuble", "effondré", "inconscient", "blessé", 
+                    "secours", "urgence", "victimes", "gaz", "fumée", "incendie",
+                    "inondation", "avalanche", "SOS", "rubble", "collapse", "unconscious",
+                    "kidnap", "enlèvement", "poursuite", "pursuit", "hostage", "otage", "stalker", "abduction"
+                ]
                 transcriber = aai.Transcriber()
-                config = aai.TranscriptionConfig(
-                    language_detection=True,
-                    speech_model=aai.SpeechModel.best,
-                    word_boost=[
-                        "décombres", "immeuble", "effondré", "inconscient", "blessé", 
-                        "secours", "urgence", "victimes", "gaz", "fumée", "incendie",
-                        "inondation", "avalanche", "SOS", "rubble", "collapse", "unconscious",
-                        "kidnap", "enlèvement", "poursuite", "pursuit", "hostage", "otage", "stalker", "abduction"
-                    ]
-                )
+                try:
+                    config = aai.TranscriptionConfig(
+                        language_detection=True,
+                        speech_model=aai.SpeechModel.best,
+                        word_boost=word_boost_terms
+                    )
+                except Exception:
+                    config = aai.TranscriptionConfig(
+                        language_detection=True,
+                        word_boost=word_boost_terms
+                    )
                 transcript = transcriber.transcribe(audio_file_path, config=config)
                 if transcript.error:
                     logger.error(f"AssemblyAI Transcription error: {transcript.error}")

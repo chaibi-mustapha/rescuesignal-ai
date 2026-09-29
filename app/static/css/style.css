@@ -791,10 +791,57 @@ canvas.waveform-canvas {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: white;
-  z-index: 9999;
+  background: transparent;
+  z-index: 999999;
   display: none;
   pointer-events: none;
+  transition: background 0.04s ease-out;
+}
+
+.optical-beacon-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(245, 158, 11, 0.18);
+  border: 1px solid #f59e0b;
+  color: #fef08a;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+  animation: beacon-glow 0.8s infinite alternate ease-in-out;
+}
+
+@keyframes beacon-glow {
+  0% { box-shadow: 0 0 5px rgba(245, 158, 11, 0.3); }
+  100% { box-shadow: 0 0 18px rgba(245, 158, 11, 0.85); }
+}
+
+.beacon-pulse-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #f59e0b;
+  box-shadow: 0 0 10px #f59e0b;
+  animation: dot-flash 0.3s infinite alternate;
+}
+
+@keyframes dot-flash {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  100% { transform: scale(1.3); opacity: 1; }
+}
+
+.btn-light.optical-strobe-active {
+  background: #f59e0b !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.9), 0 0 50px rgba(255, 255, 255, 0.6) !important;
+  animation: strobe-btn-flash 0.25s infinite alternate !important;
+}
+
+@keyframes strobe-btn-flash {
+  0% { transform: scale(1); filter: brightness(1); }
+  100% { transform: scale(1.03); filter: brightness(1.4); }
 }
 
 /* Responsive Footer */
