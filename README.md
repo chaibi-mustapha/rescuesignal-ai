@@ -234,15 +234,53 @@ python run.py
 
 ---
 
+## 🚑 911 / 112 AI Crisis Dispatcher & Dynamic Vital Triage
+
+During large-scale catastrophes, emergency centers receive dozens of simultaneous distress signals. Traditional chronological queues (*First In, First Out*) waste critical minutes because stable calls block dying victims.
+
+RescueSignal AI's **Rescue Station (Terminal B)** operates as an **Autonomous AI Crisis Dispatcher**:
+- **Dynamic Vital Triage Override**: Incoming calls are continuously re-ordered in real time based on vital criticality (`P1 - CRITICAL` > `P2 - URGENT` > `P3 - MODERATE`).
+- **Instant P1 Alert**: When a life-threatening call arrives (unconscious victim, severe bleeding, or active hostage threat), an alert banner `⚡ DYNAMIC TRIAGE OVERRIDE` triggers and automatically propels the call to **#1 HIGHEST PRIORITY**.
+- **Interactive Audio Verification**: Dispatchers can listen to real victim distress audio directly from each incident card (`▶ 🎙️ Listen to Victim Call`).
+- **1-Click Rapid Deployment**: The dispatcher clicks `🚨 Confirm & Dispatch Emergency Units`, instantly updating the incident to `🚑 Response Units En Route (ETA: 4 min)` and locking the tactical checklist.
+
+### 🎧 3 Realistic Multi-Victim Scenarios Included:
+1. **Call 1 (🔴 P1 - CRITICAL — Rubble Collapse)**:
+   - *Audio*: Woman breathless under concrete: *"Help! Can anyone hear me?! Trapped under rubble... Sarah is unconscious!"*
+   - *Protocol*: ICU Resuscitation Unit #04 + Heavy Extrication Jaws.
+2. **Call 2 (🚨 P1 - TACTICAL — Hostage & Intruder Threat)**:
+   - *Audio*: Faint whispered call: *"Armed intruder on 3rd floor. Hostage threat, suspect armed. 2 people hiding... Send tactical police, do not make noise."*
+   - *Protocol*: SWAT Hostage Rescue + Covert P2P Mesh Triangulation (Zero Siren / Zero Light).
+3. **Call 3 (🛗 P2 - URGENT — Stalled Elevator)**:
+   - *Audio*: Calm but concerned voice: *"Elevator stalled between floor 4 and 5 after tremors. 4 people trapped, conscious and stable."*
+   - *Protocol*: Shaft Winch Rescue Team.
+
+---
+
+## 🎬 Presentation Pitch Deck & Master Demonstrations
+
+| Deliverable | Description / Location |
+| :--- | :--- |
+| **📄 Presentation Deck** | [`RescueSignal_AI_Pitch_Deck.pdf`](../video/RescueSignal_AI_Pitch_Deck.pdf) *(1920×1080 16:9 Landscape, 6 Slides)* |
+| **🎥 Master Video (English)** | [`video/rescuesignal_ai_live_demo_hd.mp4`](../video/rescuesignal_ai_live_demo_hd.mp4) *(Full HD 1080p 60 FPS, 2m 56s)* |
+| **🎥 Master Video (French)** | [`video/rescuesignal_ai_live_demo_hd_fr.mp4`](../video/rescuesignal_ai_live_demo_hd_fr.mp4) *(Full HD 1080p 60 FPS, 2m 50s)* |
+| **🌐 Cloud Deployment** | [https://rescuesignal-ai.onrender.com](https://rescuesignal-ai.onrender.com) *(Always Live on Render)* |
+| **💻 GitHub Source** | [https://github.com/chaibi-mustapha/rescuesignal-ai](https://github.com/chaibi-mustapha/rescuesignal-ai) |
+
+---
+
 ## 🧪 Interactive Walkthrough
 
 1. Open `http://localhost:8000/` (or the live URL on Render).
 2. On the left phone (**Victim Transmitter**):
    - Tap **Push to Speak** to talk via your microphone, OR click one of the quick scenario buttons (*e.g., "🏢 Building Collapse"*).
    - Observe the instant extraction by the AssemblyAI Voice Agent (3 people, 1 injured, 1 unconscious, Critical urgency) and the compressed RS1 packet.
-   - Click **🔊 Broadcast Acoustic Signal** to hear the pure Web Audio FSK frequency burst.
+   - Click **🔊 Broadcast Acoustic Signal** to hear the pure Web Audio FSK frequency burst (1200/2200 Hz).
+   - Click **💡 Broadcast Optical Strobe** to view the 4-flash high-intensity Morse beacon.
    - Click **📶 Broadcast to Local P2P Mesh (BLE)**.
 3. Observe on the right phone (**Rescue Station**):
    - Emergency audio chime alerts the rescuer.
    - The packet is decoded and CRC16 checksum is verified.
    - The triage card displays **P1 - CRITICAL** with the tailored emergency response protocol.
+   - Click **⚡ Simulate 3 Incoming Victim Calls** to test the AI Crisis Dispatcher reordering calls dynamically!
+
